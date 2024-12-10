@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.custom-carousel .slick-slide {
+  transform: scale(0.8); /* 기본 크기 축소 */
+  transition: transform 0.5s ease, opacity 0.5s ease; /* 전환 효과 추가 */
+  opacity: 0.5; /* 배경 슬라이드 투명도 */
+}
+
+.custom-carousel .slick-active {
+  transform: perspective(1000px) rotateY(15deg); /* 3D 회전 효과 */
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* 부드러운 전환 */
+}
+
+.custom-carousel .slick-active:nth-of-type(odd):not(.slick-center) {
+  transform: perspective(1000px) rotateY(-15deg); /* 중심 왼쪽 슬라이드 */
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.custom-carousel .slick-center {
+  transform: scale(1) rotateY(0deg); /* 중심 슬라이드 강조 */
+  opacity: 1;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* 부드러운 전환 */
+}
