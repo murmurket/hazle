@@ -11,13 +11,78 @@ export default function Home() {
   return (
     <div>
       <Navbar />
-      <main className="pt-16 px-10">
-        <PortfolioCarousel items={cepBranding} />
-        <PortfolioCarousel items={pangeaBranding} />
-        <PortfolioCarousel items={cmsSiteItems} />
-        <PortfolioCarousel items={bookingSystem} />
-        <PortfolioCarousel items={customDevelopment} />
-        <PortfolioCarousel items={graphicDesign} />
+      <main className="pt-16 px-10 space-y-10">
+        <section>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold">CEP Dental Education Centre</h2>
+            <a href="https://cepdental.com/" className="text-blue-500 hover:underline">
+            cepdental.com
+            </a>
+          </div>
+          <PortfolioCarousel items={cepBranding} />
+        </section>
+
+        <section>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold">Pangea Dental World</h2>
+            <a href="https://pangeadental.com/" className="text-blue-500 hover:underline">
+            pangeadental.com
+            </a>
+          </div>
+          <PortfolioCarousel items={pangeaBranding} />
+        </section>
+
+        <section>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold">CMS Site Items</h2>
+            <a href="https://www.ryuko.ca/" className="text-blue-500 hover:underline">
+              ryuko.ca
+            </a>
+            <a href="https://www.treehousetoys.ca/" className="text-blue-500 hover:underline">
+              treehousetoys.ca
+            </a>
+            <a href="https://chillaxvape.ca/" className="text-blue-500 hover:underline">
+              chillaxvape.ca
+            </a>
+          </div>
+          <PortfolioCarousel items={cmsSiteItems} />
+        </section>
+
+        <section>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold">Booking System</h2>
+            <a href="https://udrgolf.com/" className="text-blue-500 hover:underline">
+              udrgolf.com
+            </a>
+            <a href="https://www.mflexgolf.ca/booknow/room/" className="text-blue-500 hover:underline">
+              booking page
+            </a>
+          </div>
+          <PortfolioCarousel items={bookingSystem} />
+        </section>
+
+        <section>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold">Custom Development</h2>
+            <a href="https://playcanv.as/b/qxEEezGK/" className="text-blue-500 hover:underline">
+              Sportsguard 3D
+            </a>
+            <a href="https://kimskatsu.ca/" className="text-blue-500 hover:underline">
+              kimskatsu.ca
+            </a>
+            <a href="https://murmurket.com/greedy/" className="text-blue-500 hover:underline">
+              greedy Donut
+            </a>
+          </div>
+          <PortfolioCarousel items={customDevelopment} />
+        </section>
+
+        <section>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold">Graphic Design</h2>
+          </div>
+          <PortfolioCarousel items={graphicDesign} />
+        </section>
       </main>
     </div>
   );
