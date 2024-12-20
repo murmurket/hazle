@@ -54,6 +54,9 @@ const PortfolioCarousel = ({ items }: CarouselProps) => {
                 alt={`Portfolio ${item.id}`}
                 fill
                 className="object-cover object-top rounded-lg"
+                priority={item.id === 1} // 첫 번째 이미지는 우선 로드
+                loading={item.id === 1 ? "eager" : "lazy"} // 나머지는 lazy 로드
+                sizes="(max-width: 768px) 100vw, 50vw" // 반응형 이미지 설정
               />
               <div className="absolute inset-0 flex justify-center items-center text-white text-lg font-bold bg-black bg-opacity-30">
                 {item.title}
