@@ -13,7 +13,7 @@ export default function Home() {
       <Navbar />
       <main className="pt-16 px-10 space-y-10">
         <section>
-          <div className="flex justify-between items-center mb-4">
+          <div id="cepDental" className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold">CEP Dental Education Centre</h2>
             <a href="https://cepdental.com/" className="text-blue-500 hover:underline">
             cepdental.com
@@ -23,7 +23,7 @@ export default function Home() {
         </section>
 
         <section>
-          <div className="flex justify-between items-center mb-4">
+          <div id="pangeaDentalWorld" className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold">Pangea Dental World</h2>
             <a href="https://pangeadental.com/" className="text-blue-500 hover:underline">
             pangeadental.com
@@ -33,7 +33,7 @@ export default function Home() {
         </section>
 
         <section>
-          <div className="flex justify-between items-center mb-4">
+          <div id="cmsSiteItems" className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold">CMS Site Items</h2>
             <a href="https://www.ryuko.ca/" className="text-blue-500 hover:underline">
               ryuko.ca
@@ -49,7 +49,7 @@ export default function Home() {
         </section>
 
         <section>
-          <div className="flex justify-between items-center mb-4">
+          <div id="bookingSystem" className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold">Booking System</h2>
             <a href="https://udrgolf.com/" className="text-blue-500 hover:underline">
               udrgolf.com
@@ -62,7 +62,7 @@ export default function Home() {
         </section>
 
         <section>
-          <div className="flex justify-between items-center mb-4">
+          <div id="customDevelopment" className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold">Custom Development</h2>
             <a href="https://playcanv.as/b/qxEEezGK/" className="text-blue-500 hover:underline">
               Sportsguard 3D
@@ -78,7 +78,7 @@ export default function Home() {
         </section>
 
         <section>
-          <div className="flex justify-between items-center mb-4">
+          <div id="graphicDesign" className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold">Graphic Design</h2>
           </div>
           <PortfolioCarousel items={graphicDesign} />
