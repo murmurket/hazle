@@ -1,4 +1,14 @@
-import Navbar from "@/components/Navbar";
+"use client";
+
+import { useRef } from "react";
+import {
+  motion,
+  useScroll,
+  useSpring,
+  useTransform,
+  MotionValue
+} from "framer-motion";
+
 import PortfolioCarousel from "@/components/PortfolioCarousel";
 import cepBranding from "@/data/cepBranding";
 import pangeaBranding from "@/data/pangeaBranding";
@@ -7,12 +17,54 @@ import bookingSystem from "@/data/bookingSystem";
 import customDevelopment from "@/data/customDevelopment";
 import graphicDesign from "@/data/graphicDesign";
 
+function useParallax(value: MotionValue<number>, distance: number) {
+  return useTransform(value, [0, 1], [-distance, distance]);
+}
+
+function PfType({ id }: { id: number }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref });
+  const y = useParallax(scrollYProgress, 300);
+  const pfInfo = [
+    { sectionId: "cepDental", title: "CEP Dental Education Centre", carousel: cepBranding },
+    { sectionId: "pangeaDentalWorld", title: "Pangea Dental World", carousel: pangeaBranding },
+    { sectionId: "cmsSiteItems", title: "CMS Site Items", carousel: cmsSiteItems },
+    { sectionId: "bookingSystem", title: "Booking System", carousel: bookingSystem },
+    { sectionId: "customDevelopment", title: "Custom Development", carousel: customDevelopment },
+    { sectionId: "graphicDesign", title: "Graphic Design", carousel: graphicDesign },
+  ];
+  const { sectionId, carousel, title } = pfInfo[id];
+
+  return (
+    <section className="px-10">
+      <div ref={ref} id={sectionId}>
+        <PortfolioCarousel items={carousel} />
+      </div>
+      <motion.h2 style={{ y }}>{title}</motion.h2>
+
+    </section>
+  );
+}
+
 export default function Home() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
   return (
     <div>
-      <Navbar />
-      <main className="pt-16 px-10 space-y-10">
-        <section>
+      <main className="pt-16 space-y-10">
+        <>
+          {[0, 1, 2, 3, 4, 5].map((pfType) => (
+            <PfType key={pfType} id={pfType} />
+          ))}
+          <motion.div className="progress" style={{ scaleX }} />
+        </>
+        
+        {/* <section>
           <div id="cepDental" className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold">CEP Dental Education Centre</h2>
             <a href="https://cepdental.com/" className="text-blue-500 hover:underline">
@@ -82,7 +134,7 @@ export default function Home() {
             <h2 className="text-2xl font-bold">Graphic Design</h2>
           </div>
           <PortfolioCarousel items={graphicDesign} />
-        </section>
+        </section> */}
       </main>
     </div>
   );

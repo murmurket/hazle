@@ -15,11 +15,14 @@ interface CarouselProps {
 const PortfolioCarousel = ({ items }: CarouselProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const openModal = useCallback((image: string) => {
-    setSelectedImage(image);
-    setIsModalOpen(true);
-  }, []);
+    if (!isDragging) { // 드래그 중일 때는 클릭 무시
+      setSelectedImage(image);
+      setIsModalOpen(true);
+    }
+  }, [isDragging]);
 
   const closeModal = useCallback(() => {
     setSelectedImage(null);
@@ -27,17 +30,42 @@ const PortfolioCarousel = ({ items }: CarouselProps) => {
   }, []);
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 1000,
-    slidesToShow: 3,
+    slidesToShow: 2,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 5000,
     pauseOnHover: true,
-    arrows: true,
+    arrows: false,
     centerMode: true,
     centerPadding: "0",
+    responsive: [
+      {
+        breakpoint: 768, // 768px 이하일 때 (모바일)
+        settings: {
+          slidesToShow: 1, // 모바일에서 1개 슬라이드 표시
+        },
+      },{
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 2,
+        },
+      },{
+        breakpoint: 1920,
+        settings: {
+          slidesToShow: 3,
+        },
+      },{
+        breakpoint: 3000,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+    ],
+    beforeChange: () => setIsDragging(true), // 드래그 시작 시
+    afterChange: () => setTimeout(() => setIsDragging(false), 100), // 드래그 끝난 후 잠시 후 해제
   };
 
   return (
@@ -47,7 +75,7 @@ const PortfolioCarousel = ({ items }: CarouselProps) => {
           <div key={item.id} className="p-4">
             <div
               className="h-64 flex justify-center items-center relative cursor-pointer"
-              onClick={() => openModal(item.image)} // 이미지 클릭 시 모달 열기
+              onClick={() => openModal(item.image)} // 이미지 클릭 시 드래그 여부 확인 후 모달 열기
             >
               <Image
                 src={item.image}
