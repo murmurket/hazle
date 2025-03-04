@@ -25,13 +25,38 @@ function PfType({ id }: { id: number }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref });
   const y = useParallax(scrollYProgress, 300);
+
   const pfInfo = [
-    { sectionId: "cepDental", title: "CEP Dental Education Centre", carousel: cepBranding },
-    { sectionId: "pangeaDentalWorld", title: "Pangea Dental World", carousel: pangeaBranding },
-    { sectionId: "cmsSiteItems", title: "CMS Site Items", carousel: cmsSiteItems },
-    { sectionId: "bookingSystem", title: "Booking System", carousel: bookingSystem },
-    { sectionId: "customDevelopment", title: "Custom Development", carousel: customDevelopment },
-    { sectionId: "graphicDesign", title: "Graphic Design", carousel: graphicDesign },
+    {
+      sectionId: "cepDental",
+      title: "CEP Dental Education Centre",
+      carousel: cepBranding
+    },
+    {
+      sectionId: "pangeaDentalWorld",
+      title: "Pangea Dental World",
+      carousel: pangeaBranding
+    },
+    {
+      sectionId: "cmsSiteItems",
+      title: "CMS Site Items",
+      carousel: cmsSiteItems
+    },
+    {
+      sectionId: "bookingSystem",
+      title: "Booking System",
+      carousel: bookingSystem
+    },
+    {
+      sectionId: "customDevelopment",
+      title: "Custom Development",
+      carousel: customDevelopment
+    },
+    {
+      sectionId: "graphicDesign",
+      title: "Graphic Design",
+      carousel: graphicDesign
+    }
   ];
   const { sectionId, carousel, title } = pfInfo[id];
 

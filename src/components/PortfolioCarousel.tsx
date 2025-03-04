@@ -8,18 +8,25 @@ import Modal from "@/components/Modal";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+interface CarouselItem {
+  id: number;
+  title: string;
+  image: string;
+  links?: { url: string; text: string }[]; // 여러 개의 링크 가능
+}
+
 interface CarouselProps {
-  items: { id: number; title: string; image: string }[];
+  items: CarouselItem[];
 }
 
 const PortfolioCarousel = ({ items }: CarouselProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<{ image: string; links?: { url: string; text: string }[] } | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  const openModal = useCallback((image: string) => {
+  const openModal = useCallback((image: string, links?: { url: string; text: string }[]) => {
     if (!isDragging) { // 드래그 중일 때는 클릭 무시
-      setSelectedImage(image);
+      setSelectedImage({ image, links });
       setIsModalOpen(true);
     }
   }, [isDragging]);
@@ -75,7 +82,7 @@ const PortfolioCarousel = ({ items }: CarouselProps) => {
           <div key={item.id} className="p-4">
             <div
               className="h-64 flex justify-center items-center relative cursor-pointer"
-              onClick={() => openModal(item.image)} // 이미지 클릭 시 드래그 여부 확인 후 모달 열기
+              onClick={() => openModal(item.image, item.links)} // 이미지 클릭 시 드래그 여부 확인 후 모달 열기
             >
               <Image
                 src={item.image}
@@ -95,7 +102,14 @@ const PortfolioCarousel = ({ items }: CarouselProps) => {
       </Slider>
 
       {/* Modal 컴포넌트 */}
-      <Modal image={selectedImage} isOpen={isModalOpen} onClose={closeModal} />
+      {selectedImage && (
+        <Modal 
+          image={selectedImage.image} 
+          isOpen={isModalOpen} 
+          onClose={closeModal} 
+          links={selectedImage.links} // 선택된 이미지의 링크 전달
+        />
+      )}
     </motion.div>
   );
 };

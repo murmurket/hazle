@@ -5,9 +5,10 @@ interface ModalProps {
   image: string | null;
   isOpen: boolean;
   onClose: () => void;
+  links?: { url: string; text: string }[];
 }
 
-const Modal = ({ image, isOpen, onClose }: ModalProps) => {
+const Modal = ({ image, isOpen, onClose, links }: ModalProps) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -33,12 +34,29 @@ const Modal = ({ image, isOpen, onClose }: ModalProps) => {
         className="relative w-[90vw] max-w-3xl h-[80vh] flex items-center justify-center" // 부모 컨테이너 크기 제한 및 상대 위치 설정
         onClick={(e) => e.stopPropagation()} // 내부 클릭 이벤트 전파 방지
       >
-        <Image
-          src={image}
-          alt="Selected"
-          layout="fill" // 부모 컨테이너에 맞춤
-          className="object-contain rounded-lg" // 비율 유지 및 잘리지 않게 표시
-        />
+        <div>
+          <Image
+            src={image}
+            alt="Selected"
+            layout="fill" // 부모 컨테이너에 맞춤
+            className="object-contain rounded-lg" // 비율 유지 및 잘리지 않게 표시
+          />
+        </div>
+        {links && links.length > 0 && (
+          <div className="absolute bottom-16 inset-x-0 bg-slate-200 rounded-full p-2 shadow-md hover:bg-gray-200 transition leading-none">
+            {links.map(({ url, text }, index) => (
+              <a
+                key={index}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-center text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-300"
+              >
+                {text}
+              </a>
+            ))}
+          </div>
+        )}
         <button
           onClick={onClose}
           className="absolute bottom-2 inset-x-0 bg-slate-600 text-black rounded-full p-2 shadow-md hover:bg-gray-200 transition leading-none"
