@@ -43,14 +43,14 @@ const Modal = ({ image, isOpen, onClose, links }: ModalProps) => {
           />
         </div>
         {links && links.length > 0 && (
-          <div className="absolute bottom-16 inset-x-0 bg-slate-200 rounded-full p-2 shadow-md hover:bg-gray-200 transition leading-none">
+          <div className="absolute bottom-16 inset-x-0 bg-slate-100 rounded-full p-2 shadow-md hover:bg-gray-500 transition leading-none">
             {links.map(({ url, text }, index) => (
               <a
                 key={index}
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-center text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="block text-center text-blue-600 hover:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300"
               >
                 {text}
               </a>
