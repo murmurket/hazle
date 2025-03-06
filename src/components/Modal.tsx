@@ -59,7 +59,7 @@ const Modal = ({ image, isOpen, onClose, links }: ModalProps) => {
         )}
         <button
           onClick={onClose}
-          className="absolute bottom-2 inset-x-0 bg-slate-600 text-black rounded-full p-2 shadow-md hover:bg-gray-200 transition leading-none"
+          className="absolute bottom-2 inset-x-0 bg-slate-600 text-black rounded-full p-2 shadow-md hover:bg-gray-300 transition leading-none"
         >
           ✕
         </button>

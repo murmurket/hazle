@@ -16,8 +16,19 @@ const bookingSystem = [
         { url: "https://www.mflexgolf.ca/booknow/room/", text: "Booking Page" }
       ]
     },
-    { id: 3, title: "Clarifying UX/UI", image: "/portfolio/rad.png" },
-    { id: 4, title: "PHP, MySQL, Reponsive", image: "/portfolio/udr_mobile.jpeg" },
+    { 
+        id: 3, 
+        title: "Clarifying UX/UI", 
+        image: "/portfolio/rad.png" 
+    },
+    { 
+        id: 4, 
+        title: "PHP, MySQL, Reponsive", 
+        image: "/portfolio/udr_mobile.jpeg",
+        links: [
+          { url: "https://udrgolf.com/", text: "UDR Golf" }
+        ]
+    },
 ];
 
 export default bookingSystem;

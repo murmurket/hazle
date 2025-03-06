@@ -7,10 +7,14 @@ const customDevelopment = [
     { id: 2, title: "Large Scale Custom E-commers", image: "/portfolio/compuzone.jpg" },
     { id: 3, title: "NEXT.js Charater Site", image: "/portfolio/murmurket.gif",
         links: [
+          { url: "https://murmurket.com/", text: "Greedy Donut" }
+        ]
+    },
+    { id: 4, title: "Creative Vibe", image: "/portfolio/greedy.jpeg",
+        links: [
           { url: "https://murmurket.com/greedy/", text: "Greedy Donut" }
         ]
     },
-    { id: 4, title: "Creative Vibe", image: "/portfolio/greedy.jpeg" },
     { id: 5, title: "Rustic Vibe", image: "/portfolio/kims.jpg",
         links: [
           { url: "https://kimskatsu.ca/", text: "Kim's Katsu" }

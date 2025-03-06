@@ -31,7 +31,10 @@ const cmsSiteItems = [
     { 
         id: 5, 
         title: "Liquid", 
-        image: "/portfolio/chillax_mobile.jpg"
+        image: "/portfolio/chillax_mobile.jpg",
+        links: [
+            { url: "https://chillaxvape.ca/", text: "Chillax Vape" }
+        ]
     },
 ];
 
