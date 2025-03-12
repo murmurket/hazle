@@ -65,8 +65,7 @@ function PfType({ id }: { id: number }) {
       <div ref={ref} id={sectionId}>
         <PortfolioCarousel items={carousel} />
       </div>
-      <motion.h2 style={{ y }}>{title}</motion.h2>
-
+      <motion.h2 style={{ y, textAlign: "center"  }}>{title}</motion.h2>
     </section>
   );
 }
