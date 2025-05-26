@@ -4,7 +4,7 @@ const pangeaBranding = [
         title: "Ruby on Rails, PostgreSQL, AWS", 
         image: "/portfolio/pangea.jpg",
         links: [
-          { url: "https://pangeadental.com/", text: "Pangea Dental" }
+          { url: "https://www.instagram.com/pangea.digitaldental/", text: "Pickup Pangea SNS" }
         ]
     },
     { 
@@ -12,7 +12,7 @@ const pangeaBranding = [
         title: "Pangea Prescription", 
         image: "/portfolio/pangea_detail.jpg",
         links: [
-          { url: "https://pangeadental.com/services/d39684e9-c03a-4e45-b5bf-b4f174bcd954/details", text: "Pangea Dental Detail Page" }
+          { url: "https://www.instagram.com/pangea.digitaldental/", text: "Pickup Pangea SNS" }
         ]
     },
     { 
