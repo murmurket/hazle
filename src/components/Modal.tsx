@@ -37,7 +37,7 @@ const Modal = ({ image, isOpen, onClose, links }: ModalProps) => {
         <div>
           <Image
             src={image}
-            alt="Selected"
+            alt={`Selected ${image}`}
             layout="fill" // 부모 컨테이너에 맞춤
             className="object-contain rounded-lg" // 비율 유지 및 잘리지 않게 표시
           />

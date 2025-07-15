@@ -10,6 +10,7 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
+      aria-label="Main site navigation"
     >
       <Logo size="90" />
     </motion.nav>
