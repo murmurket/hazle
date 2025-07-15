@@ -4,7 +4,7 @@ const pangeaBranding = [
         title: "Ruby on Rails, PostgreSQL, AWS", 
         image: "/portfolio/pangea.jpg",
         links: [
-          { url: "https://www.instagram.com/pangea.digitaldental/", text: "Pickup Pangea SNS" }
+          { url: "https://www.instagram.com/pangea.digitaldental/", text: "Pangea SNS" }
         ]
     },
     { 
@@ -12,7 +12,7 @@ const pangeaBranding = [
         title: "Pangea Prescription", 
         image: "/portfolio/pangea_detail.jpg",
         links: [
-          { url: "https://www.instagram.com/pangea.digitaldental/", text: "Pickup Pangea SNS" }
+          { url: "https://www.instagram.com/pangea.digitaldental/", text: "Pangea SNS" }
         ]
     },
     { 
@@ -20,7 +20,7 @@ const pangeaBranding = [
         title: "Pangea Flyer", 
         image: "/portfolio/pangea_flyer.jpg",
         links: [
-          { url: "https://www.instagram.com/pangea.digitaldental/", text: "Pickup Pangea SNS" }
+          { url: "https://www.instagram.com/pangea.digitaldental/", text: "Pangea SNS" }
         ]
     },
     { 
@@ -36,7 +36,7 @@ const pangeaBranding = [
         title: "Pickup Flyer", 
         image: "/portfolio/pickuppangea_flyer.jpg",
         links: [
-          { url: "https://www.instagram.com/pangea.digitaldental/", text: "Pickup Pangea SNS" }
+          { url: "https://www.instagram.com/pangea.digitaldental/", text: "Pangea SNS" }
         ]
     },
     { 
@@ -44,7 +44,7 @@ const pangeaBranding = [
         title: "IDS Booth Germany", 
         image: "/portfolio/pangea_booth.jpg",
         links: [
-          { url: "https://www.instagram.com/pangea.digitaldental/", text: "Pickup Pangea SNS" }
+          { url: "https://www.instagram.com/pangea.digitaldental/", text: "Pangea SNS" }
         ]
     },
     { 
@@ -52,7 +52,7 @@ const pangeaBranding = [
         title: "IDS Banner", 
         image: "/portfolio/pangea_banner.jpg",
         links: [
-          { url: "https://www.instagram.com/pangea.digitaldental/", text: "Pickup Pangea SNS" }
+          { url: "https://www.instagram.com/pangea.digitaldental/", text: "Pangea SNS" }
         ]
     },
 ];

@@ -29,17 +29,17 @@ function PfType({ id }: { id: number }) {
   const pfInfo = [
     {
       sectionId: "cepDental",
-      title: "CEP Dental Education Centre",
+      title: "CEP Education",
       carousel: cepBranding
     },
     {
       sectionId: "pangeaDentalWorld",
-      title: "Pangea Dental World",
+      title: "Pangea Platform",
       carousel: pangeaBranding
     },
     {
       sectionId: "cmsSiteItems",
-      title: "CMS Site Items",
+      title: "CMS Sites",
       carousel: cmsSiteItems
     },
     {

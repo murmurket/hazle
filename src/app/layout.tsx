@@ -33,7 +33,7 @@ export default function RootLayout({
       >
         <Navbar />
         {children}
-        <Footer title="Hazle" />
+        <Footer title="Hia" />
       </body>
     </html>
   );
