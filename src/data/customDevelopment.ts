@@ -7,7 +7,7 @@ const customDevelopment = [
     { id: 2, title: "Large Scale Custom E-commers", image: "/portfolio/compuzone.jpg" },
     { id: 3, title: "NEXT.js Charater Site", image: "/portfolio/murmurket.gif",
         links: [
-          { url: "https://murmurket.com/", text: "Greedy Donut" }
+          { url: "https://murmurket.com/", text: "murmurket" }
         ]
     },
     { id: 4, title: "Creative Vibe", image: "/portfolio/greedy.jpeg",
