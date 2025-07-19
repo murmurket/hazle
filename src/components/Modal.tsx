@@ -42,9 +42,8 @@ const Modal = ({ image, isOpen, onClose, links }: ModalProps) => {
             className="object-contain rounded-lg" // 비율 유지 및 잘리지 않게 표시
           />
         </div>
-        <div className="absolute top-0 inset-x-0">
           {links && links.length > 0 && (
-            <div className="bg-slate-100 rounded-full p-2 shadow-md hover:bg-gray-500 transition leading-none">
+            <div className="absolute bottom-16 inset-x-0 bg-slate-100 rounded-full p-2 shadow-md hover:bg-gray-500 transition leading-none">
               {links.map(({ url, text }, index) => (
                 <a
                   key={index}
@@ -60,11 +59,10 @@ const Modal = ({ image, isOpen, onClose, links }: ModalProps) => {
           )}
           <button
             onClick={onClose}
-            className=" bg-slate-600 text-black rounded-full p-2 shadow-md hover:bg-gray-300 transition leading-none"
+            className="absolute bottom-2 inset-x-0 bg-slate-600 text-black rounded-full p-2 shadow-md hover:bg-gray-300 transition leading-none"
           >
             ✕
           </button>
-        </div>
       </div>
     </div>
   );
