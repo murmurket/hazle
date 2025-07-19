@@ -42,27 +42,29 @@ const Modal = ({ image, isOpen, onClose, links }: ModalProps) => {
             className="object-contain rounded-lg" // 비율 유지 및 잘리지 않게 표시
           />
         </div>
-        {links && links.length > 0 && (
-          <div className="absolute bottom-16 inset-x-0 bg-slate-100 rounded-full p-2 shadow-md hover:bg-gray-500 transition leading-none">
-            {links.map(({ url, text }, index) => (
-              <a
-                key={index}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-center text-blue-600 hover:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              >
-                {text}
-              </a>
-            ))}
-          </div>
-        )}
-        <button
-          onClick={onClose}
-          className="absolute bottom-2 inset-x-0 bg-slate-600 text-black rounded-full p-2 shadow-md hover:bg-gray-300 transition leading-none"
-        >
-          ✕
-        </button>
+        <div className="absolute top-0 inset-x-0">
+          {links && links.length > 0 && (
+            <div className="bg-slate-100 rounded-full p-2 shadow-md hover:bg-gray-500 transition leading-none">
+              {links.map(({ url, text }, index) => (
+                <a
+                  key={index}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-center text-blue-600 hover:text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                >
+                  {text}
+                </a>
+              ))}
+            </div>
+          )}
+          <button
+            onClick={onClose}
+            className=" bg-slate-600 text-black rounded-full p-2 shadow-md hover:bg-gray-300 transition leading-none"
+          >
+            ✕
+          </button>
+        </div>
       </div>
     </div>
   );

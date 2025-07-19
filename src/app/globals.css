@@ -182,6 +182,7 @@ img {
   height: 5px;
   background: var(--accent);
   bottom: 100px;
+  z-index: -1;
 }
 
 
