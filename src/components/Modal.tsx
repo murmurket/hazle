@@ -27,7 +27,7 @@ const Modal = ({ image, isOpen, onClose, links }: ModalProps) => {
 
   return (
     <div
-      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-75 z-50"
+      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-75 z-60"
       onClick={onClose}
     >
       <div
