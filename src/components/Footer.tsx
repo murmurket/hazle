@@ -1,13 +1,15 @@
 import { Logo } from "./Logo";
 
 export function Footer({ title = "" }) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
   return (
     <footer>
-      <a href="/" target="_blank" rel="noreferrer">
+      <a href={siteUrl} target="_blank" rel="noreferrer">
         <Logo size="15" />
       </a>
       <a
-        href="/"
+        href={siteUrl}
         target="_blank"
         rel="noreferrer"
       >
