@@ -86,7 +86,7 @@ const PortfolioCarousel = ({ items }: CarouselProps) => {
             >
               <Image
                 src={item.image}
-                alt={`Portfolio ${item.id}`}
+                alt={`${item.title} Portfolio`}
                 fill
                 className="object-cover object-top rounded-lg"
                 priority={item.id === 1} // 첫 번째 이미지는 우선 로드
