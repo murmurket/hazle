@@ -16,6 +16,7 @@ import cmsSiteItems from "@/data/cmsSiteItems";
 import bookingSystem from "@/data/bookingSystem";
 import customDevelopment from "@/data/customDevelopment";
 import graphicDesign from "@/data/graphicDesign";
+import Game from '@/components/Game';
 
 function useParallax(value: MotionValue<number>, distance: number) {
   return useTransform(value, [0, 1], [-distance, distance]);
@@ -27,6 +28,12 @@ function PfType({ id }: { id: number }) {
   const y = useParallax(scrollYProgress, 300);
 
   const pfInfo = [
+    {
+      sectionId: "littleGame",
+      title: "Little Game",
+      carousel: [],
+      contents: <Game />
+    },
     {
       sectionId: "cepDental",
       title: "CEP Education",
@@ -58,12 +65,16 @@ function PfType({ id }: { id: number }) {
       carousel: graphicDesign
     }
   ];
-  const { sectionId, carousel, title } = pfInfo[id];
+  const { sectionId, carousel, title, contents } = pfInfo[id];
 
   return (
     <section className="px-10">
       <div ref={ref} id={sectionId}>
-        <PortfolioCarousel items={carousel} />
+        {carousel.length > 0 ? (
+          <PortfolioCarousel items={carousel} />
+        ) : (
+          contents || null
+        )}
       </div>
       <motion.h1 style={{ y, textAlign: "center"  }}>{title}</motion.h1>
     </section>
@@ -82,7 +93,7 @@ export default function Home() {
     <div>
       <main className="pt-16 space-y-10">
         <>
-          {[0, 1, 2, 3, 4, 5].map((pfType) => (
+          {[0, 1, 2, 3, 4, 5, 6].map((pfType) => (
             <PfType key={pfType} id={pfType} />
           ))}
           <motion.div className="progress" style={{ scaleX }} />
