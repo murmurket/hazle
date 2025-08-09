@@ -80,7 +80,7 @@ export default function Home() {
 
   return (
     <div>
-      <main className="pt-16 space-y-10">
+      <main className="pt-16 space-y-10" id="home_main">
         <>
           {[0, 1, 2, 3, 4, 5].map((pfType) => (
             <PfType key={pfType} id={pfType} />
