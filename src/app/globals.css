@@ -207,3 +207,64 @@ img {
   opacity: 1;
   transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* 부드러운 전환 */
 }
+
+/* globals.css - add near the bottom */
+
+/* ---------- Prose polish (tables, task-lists, code) ---------- */
+.prose {
+  /* tables */
+  --tbl-border: rgba(255,255,255,0.12);
+}
+.prose :where(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  border: 1px solid var(--tbl-border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+.prose :where(thead) {
+  background: rgba(255,255,255,0.05);
+}
+.prose :where(th, td) {
+  border-bottom: 1px solid var(--tbl-border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+.prose :where(tr:last-child td) {
+  border-bottom: 0;
+}
+
+/* task-list (HTML 기반) */
+.prose :where(ul.task-list) {
+  list-style: none;
+  padding-left: 0;
+  margin: 1rem 0;
+}
+.prose :where(ul.task-list li) {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0.4rem 0;
+}
+.prose :where(ul.task-list input[type="checkbox"]) {
+  margin-top: 0.3rem;
+  width: 1rem;
+  height: 1rem;
+  accent-color: #8b5cf6; /* violet-500-ish */
+}
+
+/* code blocks */
+.prose :where(pre) {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+.prose :where(code) {
+  background: rgba(0,0,0,0.3);
+  border-radius: 0.375rem;
+  padding: 0.1rem 0.35rem;
+}

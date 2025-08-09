@@ -23,13 +23,39 @@ export const metadata = {
 2. 내일 할 일
 3. 다음 주 실험
 
+<ul className="task-list">
+  <li><input type="checkbox" defaultChecked /> 완료된 항목</li>
+  <li><input type="checkbox" /> 진행 예정</li>
+</ul>
+
 ## 표 (Table)
 
-| 항목 | 값 | 메모 |
-| --- | ---: | --- |
-| alpha | 0.05 | 유의수준 |
-| epochs | 20 | 초기 실험 |
-| lr | 0.001 | 기본 학습률 |
+<table>
+  <thead>
+    <tr>
+      <th>항목</th>
+      <th style={{textAlign: "right"}}>값</th>
+      <th>메모</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>alpha</td>
+      <td style={{textAlign: "right"}}>0.05</td>
+      <td>유의수준</td>
+    </tr>
+    <tr>
+      <td>epochs</td>
+      <td style={{textAlign: "right"}}>20</td>
+      <td>초기 실험</td>
+    </tr>
+    <tr>
+      <td>lr</td>
+      <td style={{textAlign: "right"}}>0.001</td>
+      <td>기본 학습률</td>
+    </tr>
+  </tbody>
+</table>
 
 ## 코드 (Code)
 
