@@ -30,32 +30,48 @@ export default function LabPage() {
               href={`/lab/${p.slug}`}
               className="block rounded-2xl border border-white/10 hover:border-white/20 hover:bg-white/5 transition"
             >
-              {/* Thumbnail area */}
+              {/* Thumbnail wrapper with 16:9 aspect ratio */}
               <div
-                className="w-full rounded-t-2xl overflow-hidden bg-black flex items-center justify-center"
-                style={{ aspectRatio: "16/9" }}
+                className="relative w-full rounded-t-2xl overflow-hidden bg-black"
+                style={{ aspectRatio: "16 / 9" }}
                 aria-hidden
               >
                 {p.cover ? (
-                  // Use plain <img> for simplicity; add Next/Image later if domains configured
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={p.cover}
-                    alt={p.title}
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
+                  <>
+                    {/* Blurred background layer (subtle) */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.cover}
+                      alt=""
+                      className="absolute inset-0 h-full w-full object-cover blur-md scale-110 opacity-60"
+                      loading="lazy"
+                    />
+                    {/* Foreground sharp image with gentle scale on hover */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.cover}
+                      alt={p.title}
+                      className="relative h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.03]"
+                      loading="lazy"
+                    />
+                    {/* Vignette for text readability */}
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                  </>
                 ) : (
-                  <div className="h-full w-full flex items-center justify-center">
-                    <span className="text-white text-sm tracking-wide uppercase opacity-90">
+                  // Tag placeholder thumbnail (no image case)
+                  <div className="relative h-full w-full flex items-center justify-center bg-black">
+                    {/* Diagonal highlight sweep on hover */}
+                    <div className="absolute -inset-1 bg-gradient-to-tr from-white/5 via-white/0 to-white/5 opacity-0 transition-opacity duration-500 motion-safe:group-hover:opacity-100" />
+                    <span className="relative z-10 text-white text-sm tracking-wide uppercase">
                       {p.firstTag ?? "LAB"}
                     </span>
                   </div>
                 )}
               </div>
 
-              {/* Content */}
+              {/* Card content */}
               <div className="p-4">
+                {/* Title + tags */}
                 <div className="flex flex-wrap items-center gap-2">
                   <h2 className="text-lg font-semibold">{p.title}</h2>
                   {p.tags?.slice(0, 3).map((t) => (
@@ -68,6 +84,7 @@ export default function LabPage() {
                   ))}
                 </div>
 
+                {/* Date + excerpt */}
                 <div className="mt-1 text-sm text-gray-400">
                   {p.date && <span>{formatDate(p.date)}</span>}
                   {p.excerpt && (
@@ -77,7 +94,11 @@ export default function LabPage() {
                   )}
                 </div>
 
-                <div className="mt-3 text-sm text-violet-300 underline underline-offset-4 opacity-0 group-hover:opacity-100 transition">
+                {/* Divider */}
+                <div className="mt-3 border-t border-white/10" />
+
+                {/* Read more with smooth reveal */}
+                <div className="mt-3 text-sm text-violet-300 underline underline-offset-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   Read article →
                 </div>
               </div>
