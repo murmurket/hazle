@@ -3,20 +3,20 @@
 @tailwind utilities;
 
 body {
-  --black: #000000;
-  --ash-black: #222;
-  --white: #fafafa;
-  --sky: #00ccff;
-  --green: #22dddd;
-  --blue: #1300ff;
-  --dusk: #6600ff;
-  --purple: #9900ff;
-  --pink: #ff0066;
-  --red: #fe0222;
-  --orange: #fd7702;
-  --yellow: #ffbb00;
+  --black: #0d0d0d;
+  --ash-black: #1e1e1f;
+  --white: #eaeae8;
+  --sky: #5aaecf;
+  --green: #369f99;
+  --blue: #2f43c1;
+  --dusk: #6245c2;
+  --purple: #855ab8;
+  --pink: #c93f6b;
+  --red: #b83a42;
+  --orange: #c96935;
+  --yellow: #b79532;
 
-  --background: var(--dusk);
+  --background: var(--blue);
   --accent: var(--white);
 
   margin: 0;
@@ -252,7 +252,7 @@ img {
   margin-top: 0.3rem;
   width: 1rem;
   height: 1rem;
-  accent-color: #8b5cf6; /* violet-500-ish */
+  accent-color: var(--dusk);
 }
 
 /* code blocks */
