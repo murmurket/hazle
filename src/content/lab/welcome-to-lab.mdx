@@ -1,0 +1,66 @@
+export const metadata = {
+  title: "Welcome to Lab — MDX Demo",
+  date: "2025-08-09",
+  excerpt: "헤딩/인용문/리스트/표/코드/이미지·캡션/수식/영상까지 한 번에 확인하는 샘플",
+  tags: ["demo", "mdx", "figure", "video"],
+  draft: true,  
+};
+
+# Lab에 오신 걸 환영합니다
+
+이 글은 Lab 블로그의 **MDX 렌더링 데모**입니다.  
+아래에서 텍스트, 인용문, 코드, 이미지/캡션, 수식(KaTeX), 리스트, 표, 영상까지 모두 테스트해요.
+
+> 인용문입니다. 새로운 아이디어를 간단히 기록해두는 공간으로 Lab을 활용해요.
+
+## 목록 (List)
+
+- 간단한 아이디어 메모
+- 실험 노트
+- 코드 스니펫
+- 결과 스크린샷
+
+1. 오늘 할 일
+2. 내일 할 일
+3. 다음 주 실험
+
+<ul className="task-list">
+  <li><input type="checkbox" defaultChecked /> 완료된 항목</li>
+  <li><input type="checkbox" /> 진행 예정</li>
+</ul>
+
+## 표 (Table)
+
+<table>
+  <thead>
+    <tr>
+      <th>항목</th>
+      <th style={{textAlign: "right"}}>값</th>
+      <th>메모</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>alpha</td>
+      <td style={{textAlign: "right"}}>0.05</td>
+      <td>유의수준</td>
+    </tr>
+    <tr>
+      <td>epochs</td>
+      <td style={{textAlign: "right"}}>20</td>
+      <td>초기 실험</td>
+    </tr>
+    <tr>
+      <td>lr</td>
+      <td style={{textAlign: "right"}}>0.001</td>
+      <td>기본 학습률</td>
+    </tr>
+  </tbody>
+</table>
+
+## 코드 (Code)
+
+```ts
+export function hello(name: string) {
+  return `Hello, ${name}!`;
+}

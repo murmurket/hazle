@@ -1,0 +1,114 @@
+export const metadata = {
+  title: "Understanding the `void` Function Type Across Languages — A CS50 Learning Note",
+  date: "2025-08-09",
+  excerpt: "A personal learning note from CS50: how the `void` keyword in C made me see programming languages differently.",
+  tags: ["cs50", "c", "void", "learning-notes", "programming"],
+  draft: false
+};
+
+# Understanding the `void` Function Type Across Languages — A CS50 Learning Note
+
+One of the earliest “aha!” moments I had in CS50 was with the `void` keyword in C.  
+Before CS50, I’d written plenty of code in PHP, Ruby, JavaScript… but I’d never really *declared* that a function doesn’t return anything.  
+When C made me write `void` right there in the function definition, it felt almost ceremonial — like making a promise to the compiler.
+
+> “Learning `void` in C was the first time I felt the compiler saying, ‘I trust you… but I’ll verify.’”
+
+## Static vs Dynamic Typed Languages
+
+### Static Typing
+- You declare types upfront.
+- `void` is a formal contract.
+- The compiler acts like a strict teacher: you can’t hand in something you didn’t promise.
+- **My takeaway**: Clear and predictable, but more ceremony when you just want to get ideas out quickly.
+
+**Examples**: C, C++, Java, C#, PHP (7.1+ with `: void`)
+
+### Dynamic Typing
+- Types are decided as the program runs.
+- No `void` keyword. Functions can return nothing, or suddenly start returning something later.
+- The language trusts you — but that trust can backfire.
+- **My takeaway**: Fast to prototype, but you need self-discipline to keep things consistent.
+
+**Examples**: Python, Ruby, JavaScript
+
+---
+
+## Language Comparison Table
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Language</th>
+      <th>How It Handles "No Return"</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Static Typed</td>
+      <td>C / C++ / Java / C#</td>
+      <td>Explicit <code>void</code> keyword. Compiler prevents returning a value.</td>
+    </tr>
+    <tr>
+      <td>Static Typed</td>
+      <td>PHP (7.1+)</td>
+      <td><code>: void</code> return type declaration. Cannot return a value.</td>
+    </tr>
+    <tr>
+      <td>Dynamic Typed</td>
+      <td>Ruby / Rails</td>
+      <td>No <code>void</code> keyword. Last expression is returned, but can be ignored.</td>
+    </tr>
+    <tr>
+      <td>Dynamic Typed</td>
+      <td>Python</td>
+      <td>No <code>void</code> keyword. Without <code>return</code>, gives <code>None</code>.</td>
+    </tr>
+    <tr>
+      <td>Dynamic Typed</td>
+      <td>JavaScript</td>
+      <td>No <code>void</code> return type. Without <code>return</code>, gives <code>undefined</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Code Examples
+
+```c
+// C
+void sayHello() {
+    printf("Hello\n");
+}
+```
+
+```php
+// PHP
+function logMessage(string $msg): void {
+echo $msg;
+}
+```
+
+```ruby
+// Ruby
+def log_message(msg)
+puts msg
+nil
+end
+```
+
+```python
+// Python
+
+def say_hello():
+print(“Hello”)
+```
+
+```javascript
+// JavaScript
+function greet() {
+console.log(“Hello”);
+}
+```
