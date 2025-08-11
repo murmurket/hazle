@@ -6,15 +6,15 @@ body {
   --black: #0d0d0d;
   --ash-black: #1e1e1f;
   --white: #eaeae8;
-  --sky: #5aaecf;
-  --green: #369f99;
-  --blue: #2f43c1;
-  --dusk: #6245c2;
-  --purple: #855ab8;
-  --pink: #c93f6b;
-  --red: #b83a42;
-  --orange: #c96935;
-  --yellow: #b79532;
+  --sky: #4e97b2;
+  --green: #2f8984;
+  --blue: #293a9f;
+  --dusk: #543ba5;
+  --purple: #7450a0;
+  --pink: #a8365c;
+  --red: #9e343b;
+  --orange: #a85a2d;
+  --yellow: #9c8330;
 
   --background: var(--blue);
   --accent: var(--white);
@@ -214,6 +214,7 @@ img {
 .prose {
   /* tables */
   --tbl-border: rgba(255,255,255,0.12);
+  --tw-prose-invert-quote-borders: #617da9;
 }
 .prose :where(table) {
   width: 100%;

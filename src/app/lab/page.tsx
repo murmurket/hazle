@@ -1,5 +1,6 @@
 // src/app/lab/page.tsx
 import Link from "next/link";
+import Image from "next/image";
 import { getAllLabPosts } from "@/lib/lab";
 
 export const revalidate = 0;
@@ -17,7 +18,7 @@ export default function LabPage() {
   const posts = getAllLabPosts();
 
   return (
-    <main className="max-w-5xl mx-auto p-6">
+    <main className="max-w-5xl mx-auto px-6 pt-10 pb-20">
       <h1 className="text-3xl font-bold mb-2">Lab</h1>
       <p className="text-gray-400 mb-8">
         A space to record experimental blogs, projects, and ideas.
@@ -30,42 +31,43 @@ export default function LabPage() {
               href={`/lab/${p.slug}`}
               className="block rounded-2xl border border-white/10 hover:border-white/20 hover:bg-white/5 transition"
             >
-              {/* Thumbnail wrapper with 16:9 aspect ratio */}
+              {/* Thumbnail wrapper */}
               <div
                 className="relative w-full rounded-t-2xl overflow-hidden bg-black"
                 style={{ aspectRatio: "16 / 9" }}
                 aria-hidden
               >
                 {p.cover ? (
-                  <>
-                    {/* Blurred background layer (subtle) */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={p.cover}
-                      alt=""
-                      className="absolute inset-0 h-full w-full object-cover blur-md scale-110 opacity-60"
-                      loading="lazy"
+                    <>
+                    {/* Blurred background */}
+                    <Image
+                        src={p.cover}
+                        alt=""
+                        fill
+                        className="object-cover blur-md scale-110 opacity-60"
+                        priority={false}
+                        unoptimized={p.cover.endsWith(".gif")}
                     />
-                    {/* Foreground sharp image with gentle scale on hover */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={p.cover}
-                      alt={p.title}
-                      className="relative h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.03]"
-                      loading="lazy"
+                    {/* Foreground sharp image */}
+                    <Image
+                        src={p.cover}
+                        alt={p.title}
+                        fill
+                        className="object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.03]"
+                        priority={false}
+                        unoptimized={p.cover.endsWith(".gif")}
                     />
-                    {/* Vignette for text readability */}
+                    {/* Vignette */}
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-                  </>
+                    </>
                 ) : (
-                  // Tag placeholder thumbnail (no image case)
-                  <div className="relative h-full w-full flex items-center justify-center bg-black">
-                    {/* Diagonal highlight sweep on hover */}
+                    // Placeholder
+                    <div className="relative h-full w-full flex items-center justify-center bg-black">
                     <div className="absolute -inset-1 bg-gradient-to-tr from-white/5 via-white/0 to-white/5 opacity-0 transition-opacity duration-500 motion-safe:group-hover:opacity-100" />
                     <span className="relative z-10 text-white text-sm tracking-wide uppercase">
-                      {p.firstTag ?? "LAB"}
+                        {p.firstTag ?? "LAB"}
                     </span>
-                  </div>
+                    </div>
                 )}
               </div>
 

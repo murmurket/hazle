@@ -17,7 +17,7 @@ export default async function LabPostPage({
   if (!meta) return notFound();
 
   return (
-    <main className="max-w-3xl mx-auto p-6">
+    <main className="max-w-3xl mx-auto px-6 pt-10 pb-20">
       <h1 className="text-3xl font-bold mb-4">{meta.title ?? slug}</h1>
       {meta.date && <p className="text-sm text-gray-400 mb-6">{meta.date}</p>}
 

@@ -7,7 +7,7 @@ import { Logo } from "./Logo";
 export default function Navbar() {
   return (
     <motion.nav
-      className="flex justify-between items-center px-8 h-20 bg-transparent fixed top-0 w-full z-50"
+      className="flex justify-between items-center px-8 py-4 h-20 backdrop-blur-md fixed top-0 w-full z-50"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
@@ -15,7 +15,7 @@ export default function Navbar() {
     >
       {/* 왼쪽: 로고 */}
       <Link href="/" aria-label="Go to homepage">
-        <Logo size="60" />
+        <Logo size="40" />
       </Link>
 
       {/* 오른쪽: 메뉴 */}
