@@ -49,3 +49,38 @@ Input: [(2, 'A'), (1, 'X'), (2, 'B')]
 ```python
 if arr[j] < arr[min_idx]:
     min_idx = j
+```
+
+### 🧠 Struct vs Class: Memory Allocation Differences
+
+Although `struct` and `class` may look similar, they differ significantly in how they handle memory and copying.
+
+---
+
+#### 🔍 Key Differences
+
+| Feature         | `struct`                        | `class`                          |
+|----------------|----------------------------------|----------------------------------|
+| Memory Storage | **Stack** memory                | **Heap** memory                  |
+| Copy Behavior  | **Value** copy                  | **Reference** copy               |
+| Lifetime       | Disposed when out of scope      | Managed by the Garbage Collector |
+| Use Case       | Lightweight data grouping       | Full object-oriented structures  |
+
+---
+
+#### 🧪 Code Example
+
+```csharp
+struct PointStruct {
+    public int x, y;
+}
+
+class PointClass {
+    public int x, y;
+}
+
+PointStruct a = new PointStruct { x = 1, y = 2 };
+PointStruct b = a;  // Value copy → independent
+
+PointClass c = new PointClass { x = 1, y = 2 };
+PointClass d = c;  // Reference copy → shared
