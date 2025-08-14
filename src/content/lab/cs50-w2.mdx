@@ -1,0 +1,130 @@
+export const metadata = {
+  title: "CS50 — Command-Line Arguments & String Memory",
+  date: "2025-08-13",
+  excerpt: "Understanding how argc/argv work and how strings are stored with null-terminators in C.",
+  tags: ["cs50", "string", "argc", "argv", "memory", "c-language"],
+  draft: false,
+};
+
+# 🧠 Command-Line Arguments & String Memory in C
+
+A breakdown of how `argc` and `argv` work in C programs, and how strings are represented in memory using null-terminated character arrays.
+
+> In C, `argv[]` elements are just strings — arrays of `char` ending with `\0`.
+
+---
+
+## `argc` and `argv[]`
+
+`main()` can take arguments from the command line using:
+
+```c
+int main(int argc, string argv[])
+```
+
+- **argc (Argument Count)**: Number of command-line arguments (including the program name)  
+- **argv (Argument Vector)**: Array of strings representing each argument
+
+Example command:
+
+```bash
+./greet Alice Bob
+```
+
+<table>
+  <thead>
+    <tr>
+      <th>Expression</th>
+      <th style={{textAlign: "right"}}>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>argc</code></td>
+      <td style={{textAlign: "right"}}>3</td>
+    </tr>
+    <tr>
+      <td><code>argv[0]</code></td>
+      <td style={{textAlign: "right"}}>"./greet"</td>
+    </tr>
+    <tr>
+      <td><code>argv[1]</code></td>
+      <td style={{textAlign: "right"}}>"Alice"</td>
+    </tr>
+    <tr>
+      <td><code>argv[2]</code></td>
+      <td style={{textAlign: "right"}}>"Bob"</td>
+    </tr>
+  </tbody>
+</table>
+
+Use case:
+
+```c
+for (int i = 0; i < argc; i++) {
+    printf("Argument %i: %s\n", i, argv[i]);
+}
+```
+
+---
+
+## 🧵 How Strings Work: Null-Termination
+
+In C, a string is an array of `char` ending with a special null character `\0`.
+
+Example:
+
+```c
+string name = "Hee";
+```
+
+<table>
+  <thead>
+    <tr>
+      <th>Index</th>
+      <th>Char</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td><code>'H'</code></td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td><code>'e'</code></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><code>'e'</code></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><code>'\0'</code> ← null terminator</td>
+    </tr>
+  </tbody>
+</table>
+
+💡 This is why `strlen()` and `printf()` know where a string ends — they stop at `\0`.
+
+---
+
+## 🔍 Key Insights
+
+- `argv[]` elements are strings (arrays of `char` ending with `\0`).
+- You can access characters via indexing: `argv[1][0]`, `argv[1][1]`, etc.
+- The null terminator is invisible but essential.
+
+---
+
+## 🧪 Fun Print
+
+Print each letter of the first argument:
+
+```c
+for (int j = 0; argv[1][j] != '\0'; j++) {
+    printf("%c\n", argv[1][j]);
+}
+```
+
+This loop stops when `\0` is reached — because C strings are self-terminating.
