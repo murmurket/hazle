@@ -58,13 +58,37 @@ Although `struct` and `class` may look similar, they differ significantly in how
 ---
 
 #### 🔍 Key Differences
-
-| Feature         | `struct`                        | `class`                          |
-|----------------|----------------------------------|----------------------------------|
-| Memory Storage | **Stack** memory                | **Heap** memory                  |
-| Copy Behavior  | **Value** copy                  | **Reference** copy               |
-| Lifetime       | Disposed when out of scope      | Managed by the Garbage Collector |
-| Use Case       | Lightweight data grouping       | Full object-oriented structures  |
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th><code>struct</code></th>
+      <th><code>class</code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Memory Storage</td>
+      <td><strong>Stack</strong> memory</td>
+      <td><strong>Heap</strong> memory</td>
+    </tr>
+    <tr>
+      <td>Copy Behavior</td>
+      <td><strong>Value</strong> copy</td>
+      <td><strong>Reference</strong> copy</td>
+    </tr>
+    <tr>
+      <td>Lifetime</td>
+      <td>Disposed when out of scope</td>
+      <td>Managed by the Garbage Collector</td>
+    </tr>
+    <tr>
+      <td>Use Case</td>
+      <td>Lightweight data grouping</td>
+      <td>Full object-oriented structures</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 

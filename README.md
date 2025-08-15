@@ -1,36 +1,228 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lab Platform
 
-## Getting Started
+A personal portfolio site built with **Next.js + TypeScript**, featuring a Lab publishing system powered by Supabase.
+The site includes portfolio projects, a Lab blog, and admin-only content management.
 
-First, run the development server:
+---
 
+## 📦 Tech Stack
+
+- **Frontend**: [Next.js 14+](https://nextjs.org/) (App Router), [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Database & Auth**: [Supabase](https://supabase.com/) (PostgreSQL + Auth + Storage)
+- **Markdown/MDX**: [next-mdx-remote](https://github.com/hashicorp/next-mdx-remote) or custom loader
+- **Image Optimization**: Next.js `Image` component with optional GIF handling
+- **Deployment**: [Netlify](https://netlify.com/)
+
+---
+
+## 🚀 Features
+
+- 📂 **Dynamic MDX content** with metadata  
+- 🖼 **Post cover images** with blurred background preview  
+- 🔒 **RLS policies**: only admin UID can write/update/delete  
+- 🗂 **Tags & filtering**  
+- 📅 Date formatting (`Intl.DateTimeFormat`)  
+- 📱 Responsive grid layout  
+- ⏳ **Skeleton loading states** for better UX  
+- 🔍 Client-side search & tag filter  
+
+---
+
+## 📁 Project Structure
+
+src/  
+  app/  
+    lab/                 # Lab page (list view)  
+    lab/[slug]/          # Single post page  
+    lab/loading.tsx      # Skeleton loader  
+    api/posts/           # API routes for CRUD (admin protected)  
+  components/  
+    lab/                 # Lab-specific components (LabGrid, TagList, etc.)  
+  lib/                   # Utilities (markdown, supabase helpers)  
+  types/  
+    lab.ts               # LabPost type definition  
+public/  
+  images/                # Static assets  
+
+---
+
+## ⚙️ Setup & Installation
+
+### 1) Clone
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/lab-platform.git
+cd lab-platform
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2) Install
+```bash
+pnpm install
+# or
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3) Env
+Create `.env.local`:
+```env
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+SUPABASE_SERVICE_ROLE_KEY=...    # server-only usage
+NEXT_PUBLIC_ADMIN_UID=...        # your Supabase Auth UID (uuid)
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4) Run
+```bash
+pnpm dev
+# or
+npm run dev
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔑 Supabase: Table & RLS (UID-based)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> Replace **`YOUR_ADMIN_UID`** with your actual Supabase Auth **User ID (uuid)**.  
+> Console → Authentication → Users → copy your user’s **ID**.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```sql
+-- 0) Table
+create table if not exists public.posts (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null,
+  title text not null,
+  excerpt text,
+  tags text[] default '{}',
+  cover text,
+  content_mdx text not null,
+  draft boolean default true,
+  hidden_from_list boolean default false,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
 
-## Deploy on Vercel
+create index if not exists idx_posts_created_at on public.posts (created_at desc);
+create index if not exists idx_posts_draft on public.posts (draft);
+create index if not exists idx_posts_hidden on public.posts (hidden_from_list);
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+-- Enable RLS
+alter table public.posts enable row level security;
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+-- (cleanup if you experimented before)
+drop policy if exists "read published posts" on public.posts;
+drop policy if exists "admin read write by uid" on public.posts;
+
+-- 1) Public read: only published (not draft, not hidden)
+create policy "read published posts"
+on public.posts
+for select
+using (
+  coalesce(draft, true) = false
+  and coalesce(hidden_from_list, false) = false
+);
+
+-- 2) Admin full access by UID (select/insert/update/delete)
+create policy "admin read write by uid"
+on public.posts
+for all
+using ( auth.uid() = 'YOUR_ADMIN_UID'::uuid )
+with check ( auth.uid() = 'YOUR_ADMIN_UID'::uuid );
+```
+
+### (Optional) Storage bucket `lab-images` policies  
+Make images publicly readable, but allow **writes/updates/deletes only by admin UID**.
+
+```sql
+-- Create bucket in Console first: lab-images (Public)
+
+-- Cleanup old policies if exist
+drop policy if exists "public read lab-images" on storage.objects;
+drop policy if exists "admin write lab-images" on storage.objects;
+drop policy if exists "admin update lab-images" on storage.objects;
+drop policy if exists "admin delete lab-images" on storage.objects;
+
+-- Public read (only this bucket)
+create policy "public read lab-images"
+on storage.objects
+for select
+using ( bucket_id = 'lab-images' );
+
+-- Admin-only insert
+create policy "admin write lab-images"
+on storage.objects
+for insert
+with check (
+  bucket_id = 'lab-images'
+  and auth.uid() = 'YOUR_ADMIN_UID'::uuid
+);
+
+-- Admin-only update
+create policy "admin update lab-images"
+on storage.objects
+for update
+using (
+  bucket_id = 'lab-images'
+  and auth.uid() = 'YOUR_ADMIN_UID'::uuid
+)
+with check (
+  bucket_id = 'lab-images'
+  and auth.uid() = 'YOUR_ADMIN_UID'::uuid
+);
+
+-- Admin-only delete
+create policy "admin delete lab-images"
+on storage.objects
+for delete
+using (
+  bucket_id = 'lab-images'
+  and auth.uid() = 'YOUR_ADMIN_UID'::uuid
+);
+```
+
+> ⚠️ If you use the **Service Role Key** from server routes, it bypasses RLS.  
+> For write operations, prefer calling Supabase with the logged-in admin session (anon key) or enforce an explicit UID check in your server route before using the service key.
+
+---
+
+## 🖊 Writing a Post
+
+Two ways:
+1) **MDX file** in `content/lab` (manual path)  
+2) **Admin dashboard** (`/lab/admin`) after auth → write, upload cover, publish
+
+Frontmatter example (if using file-based MDX too):
+```mdx
+---
+title: "My First Lab Post"
+date: "2025-08-15"
+tags: ["next.js", "supabase", "mdx"]
+excerpt: "A quick overview of the lab setup"
+cover: "/images/post-cover.jpg"
+---
+```
+
+---
+
+## 🛠 Deployment
+
+- Deploy on **Netlify**  
+- inked to a Git repository github.com/murmurket/hazle
+- Build command npm run build
+- Publish directory .next
+- In Supabase **Auth → URL configuration**, allow your production domain
+
+---
+
+## 🧪 Development Notes
+
+- Shared `LabPost` type lives in `src/types/lab.ts` to avoid type drift  
+- Client grid uses search, tag filter, pagination  
+- Use `revalidatePath('/lab')` on post create/update to refresh the list  
+- Keep image sizes reasonable; prefer WEBP/optimized PNG/JPEG
+
+---
+
+## 📜 License
+
+MIT © 2025 [Hazle]
