@@ -1,11 +1,13 @@
-// MDX module typing for importing *.mdx files
+// src/types/mdx.d.ts
 declare module "*.mdx" {
-  const MDXContent: React.ComponentType<any>;
-  export default MDXContent;
-  export const metadata: any;
-}
+  import type { ReactNode, ComponentProps } from "react";
+  import type { MDXProps } from "mdx/types";
 
-// Optional: shim for 'mdx/types' if ever imported
-declare module "mdx/types" {
-  export type MDXComponents = Record<string, React.ComponentType<any>>;
+  // Default export is the compiled MDX component
+  const MDXComponent: (props: ComponentProps<"div"> & MDXProps) => ReactNode;
+  export default MDXComponent;
+
+  // Optional named exports from frontmatter-like ESM exports in MDX
+  export const metadata: Record<string, unknown> | undefined;
+  export const frontmatter: Record<string, unknown> | undefined;
 }
