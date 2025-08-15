@@ -63,8 +63,8 @@ export default function LabGrid({ posts }: { posts: LabPost[] }) {
   return (
     <>
       {/* Controls */}
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-2 flex-1">
+      <div className="mb-6 flex flex-col gap-3 sm:items-center sm:justify-between">
+        <div className="w-full flex items-center gap-2 flex-1">
           <input
             value={query}
             onChange={(e) => {
