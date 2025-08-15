@@ -3,6 +3,8 @@
 A personal portfolio site built with **Next.js + TypeScript**, featuring a Lab publishing system powered by Supabase.
 The site includes portfolio projects, a Lab blog, and admin-only content management.
 
+🔗 Live Site: [hazle.netlify.app](https://staging--hazle.netlify.app/)
+
 ---
 
 ## 📦 Tech Stack
@@ -10,9 +12,10 @@ The site includes portfolio projects, a Lab blog, and admin-only content managem
 - **Frontend**: [Next.js 14+](https://nextjs.org/) (App Router), [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Database & Auth**: [Supabase](https://supabase.com/) (PostgreSQL + Auth + Storage)
-- **Markdown/MDX**: [next-mdx-remote](https://github.com/hashicorp/next-mdx-remote) or custom loader
-- **Image Optimization**: Next.js `Image` component with optional GIF handling
-- **Deployment**: [Netlify](https://netlify.com/)
+- **Markdown/MDX**: [next-mdx-remote](https://github.com/hashicorp/next-mdx-remote) + Supabase Posts Table
+- **Image Optimization**: Next.js `Image` component with support for unoptimized GIFs, blurDataURL
+
+- **Deployment**: [Netlify](https://netlify.com/) CI + Preview builds
 
 ---
 
@@ -211,6 +214,26 @@ cover: "/images/post-cover.jpg"
 - Build command npm run build
 - Publish directory .next
 - In Supabase **Auth → URL configuration**, allow your production domain
+
+---
+
+## 🧭 Pages Overview
+
+| Path             | Description                                                              |
+|------------------|---------------------------------------------------------------------------|
+| `/`              | Landing page — brief introduction and latest featured content            |
+| `/lab`           | Lab list view — experimental posts and CS learning logs                  |
+| `/lab/[slug]`    | Individual lab post page rendered from MDX or Supabase                   |
+| `/lab/admin`     | Admin-only dashboard for creating & managing posts (auth required)       |
+| `/portfolio`     | Visual portfolio of projects, design/dev case studies                    |
+| `/about`         | Personal background, skills, values, and current goals                   |
+| `/contact`       | Contact form or external links (email, GitHub, LinkedIn)                 |
+
+### 🔎 Notes
+- `slug` refers to the unique identifier for each lab post, e.g. `/lab/cs50-w2`.
+- `/lab/admin` requires Supabase login and only allows access to the admin UID.
+- All pages are built with a responsive layout.
+- Dark mode support is optionally extendable if needed.
 
 ---
 
