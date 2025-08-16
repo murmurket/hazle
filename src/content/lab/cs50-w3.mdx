@@ -6,13 +6,13 @@ export const metadata = {
   draft: false,
 };
 
-# Sorting Algorithms & Mathematical Concepts
+Sorting Algorithms & Mathematical Concepts
 
 A quick review of essential sorting and searching algorithms, as well as exponential and logarithmic growth — for Week 3 of CS50.
 
----
+⸻
 
-## Searching
+Searching
 
 ### 1. Linear Search
 - Check every element one by one.
@@ -23,31 +23,31 @@ A quick review of essential sorting and searching algorithms, as well as exponen
 - Repeated searches are faster: O(log n).
 - Ideal when the same data will be searched many times.
 
----
+⸻
 
-## Merge Sort Example
+Merge Sort Example
 
-Input: [8, 3, 5, 4, 7, 6, 1, 2]  
-1. Split → [8, 3, 5, 4] and [7, 6, 1, 2]  
-2. Split again → until single elements  
-3. Merge sorted halves:  
-   - [3, 8] and [4, 5] → [3, 4, 5, 8]  
-   - [6, 7] and [1, 2] → [1, 2, 6, 7]  
-4. Final merge → [1, 2, 3, 4, 5, 6, 7, 8]
+Input: [8, 3, 5, 4, 7, 6, 1, 2]
+	1.	Split → [8, 3, 5, 4] and [7, 6, 1, 2]
+	2.	Split again → until single elements
+	3.	Merge sorted halves:
+	•	[3, 8] and [4, 5] → [3, 4, 5, 8]
+	•	[6, 7] and [1, 2] → [1, 2, 6, 7]
+	4.	Final merge → [1, 2, 3, 4, 5, 6, 7, 8]
 
----
+⸻
 
-## Selection Sort Example
+Selection Sort Example
 
-Input: [(2, 'A'), (1, 'X'), (2, 'B')]  
-1. Find the min: (1, 'X') → swap with (2, 'A')  
-   → [(1, 'X'), (2, 'A'), (2, 'B')]  
-2. Find the next min: (2, 'A') or (2, 'B')  
-   - If comparing with `<` only, the earlier stays.  
-   - If using `<=`, the later might be selected → unstable.
+Input: [(2, 'A'), (1, 'X'), (2, 'B')]
+	1.	Find the min: (1, 'X') → swap with (2, 'A')
+→ [(1, 'X'), (2, 'A'), (2, 'B')]
+	2.	Find the next min: (2, 'A') or (2, 'B')
+	•	If comparing with < only, the earlier stays.
+	•	If using <=, the later might be selected, changing order → unstable.
 
 ```python
-if arr[j] < arr[min_idx]:
+    if arr[j] < arr[min_idx]:
     min_idx = j
 ```
 
