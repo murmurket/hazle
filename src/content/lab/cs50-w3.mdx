@@ -43,8 +43,10 @@ Input: [(2, 'A'), (1, 'X'), (2, 'B')]
 	1.	Find the min: (1, 'X') → swap with (2, 'A')
 → [(1, 'X'), (2, 'A'), (2, 'B')]
 	2.	Find the next min: (2, 'A') or (2, 'B')
+  ```text
 	•	If comparing with < only, the earlier stays.
 	•	If using <=, the later might be selected, changing order → unstable.
+  ```
 
 ```python
     if arr[j] < arr[min_idx]:
