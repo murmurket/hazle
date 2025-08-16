@@ -217,6 +217,21 @@ cover: "/images/post-cover.jpg"
 
 ---
 
+## 🔁 Branch & Deployment Workflow
+
+- Develop new features on `feat/*` branches  
+- When the feature is complete → open a PR into `staging` (and merge)  
+- Wait for the Netlify deploy preview to pass  
+- Open a PR from `staging` → `main` and merge
+
+⚠️ The `main` branch is configured as a **Protected Branch**,  
+so direct `git push` is **not allowed**.  
+Updates must be done **via Pull Request only**,  
+and the Netlify preview check (`netlify/hazle/deploy-preview`)  
+must pass before the merge is allowed.
+
+---
+
 ## 🧭 Pages Overview
 
 | Path             | Description                                                              |
