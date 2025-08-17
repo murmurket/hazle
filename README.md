@@ -258,6 +258,7 @@ must pass before the merge is allowed.
 - Client grid uses search, tag filter, pagination  
 - Use `revalidatePath('/lab')` on post create/update to refresh the list  
 - Keep image sizes reasonable; prefer WEBP/optimized PNG/JPEG
+- Conditional class handling is done with [`clsx`](https://github.com/lukeed/clsx) for cleaner Tailwind integration.
 
 ---
 

@@ -6,7 +6,7 @@ export const metadata = {
   draft: false,
 };
 
-# 🧠 Command-Line Arguments & String Memory in C
+## 🧠 Command-Line Arguments & String Memory in C
 
 A breakdown of how `argc` and `argv` work in C programs, and how strings are represented in memory using null-terminated character arrays.
 
@@ -14,7 +14,7 @@ A breakdown of how `argc` and `argv` work in C programs, and how strings are rep
 
 ---
 
-## `argc` and `argv[]`
+### `argc` and `argv[]`
 
 `main()` can take arguments from the command line using:
 
@@ -68,7 +68,7 @@ for (int i = 0; i < argc; i++) {
 
 ---
 
-## 🧵 How Strings Work: Null-Termination
+### 🧵 How Strings Work: Null-Termination
 
 In C, a string is an array of `char` ending with a special null character `\0`.
 
@@ -109,7 +109,7 @@ string name = "Hee";
 
 ---
 
-## 🔍 Key Insights
+### 🔍 Key Insights
 
 - `argv[]` elements are strings (arrays of `char` ending with `\0`).
 - You can access characters via indexing: `argv[1][0]`, `argv[1][1]`, etc.
@@ -117,7 +117,7 @@ string name = "Hee";
 
 ---
 
-## 🧪 Fun Print
+### 🧪 Fun Print
 
 Print each letter of the first argument:
 

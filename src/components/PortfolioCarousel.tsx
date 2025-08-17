@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import Modal from "@/components/Modal";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import clsx from "clsx";
 
 interface CarouselItem {
   id: number;
@@ -93,8 +94,15 @@ const PortfolioCarousel = ({ items }: CarouselProps) => {
                 loading={item.id === 1 ? "eager" : "lazy"} // 나머지는 lazy 로드
                 sizes="(max-width: 768px) 100vw, 50vw" // 반응형 이미지 설정
               />
-              <div className="absolute inset-0 flex justify-center items-center text-white text-lg font-bold bg-black bg-opacity-30">
-                {item.title}
+              <div className="absolute top-0 right-0 inset-0 flex items-center justify-center bg-black/50 text-white">
+                <h2
+                  className={clsx(
+                    "top-3/4 text-md text-center font-medium",
+                    item.title.length > 20 && "text-sm"
+                  )}
+                >
+                  {item.title}
+                </h2>
               </div>
             </div>
           </div>
