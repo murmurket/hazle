@@ -8,6 +8,8 @@ import {
   useTransform,
   MotionValue
 } from "framer-motion";
+import clsx from "clsx";
+import { baseStyles } from "@/components/ui/Typography";
 
 import PortfolioCarousel from "@/components/PortfolioCarousel";
 import cepBranding from "@/data/cepBranding";
@@ -56,7 +58,7 @@ function PfType({ id }: { id: number }) {
       sectionId: "graphicDesign",
       title: "Graphic Design",
       carousel: graphicDesign
-    }
+    },
   ];
   const { sectionId, carousel, title } = pfInfo[id];
 
@@ -65,7 +67,15 @@ function PfType({ id }: { id: number }) {
       <div ref={ref} id={sectionId}>
         <PortfolioCarousel items={carousel} />
       </div>
-      <motion.h1 style={{ y, textAlign: "center"  }}>{title}</motion.h1>
+      <motion.h1
+        style={{ y, textAlign: "center" }}
+        className={clsx(
+          baseStyles.h1,
+          title.length > 20 && "text-3xl"
+        )}
+      >
+        {title}
+      </motion.h1>
     </section>
   );
 }
