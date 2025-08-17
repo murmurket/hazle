@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllLabPosts } from "@/lib/lab";
+import { Typography } from "@/components/ui/Typography";
 
 export const revalidate = 0;
 export const metadata = { title: "Lab Tags" };
@@ -12,7 +13,9 @@ export default function TagIndexPage() {
 
   return (
     <main className="max-w-5xl mx-auto px-6 pt-10 pb-20">
-      <h1 className="text-3xl font-bold mb-2">All Tags</h1>
+      <Typography as="h1" className="mb-2">
+        All Tags
+      </Typography>
       <p className="text-gray-400 mb-8">Browse posts by tag.</p>
 
       <ul className="flex flex-wrap gap-2">

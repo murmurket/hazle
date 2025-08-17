@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import ClientMdxLoader from "./ClientMdxLoader";
 import { getAllLabPosts } from "@/lib/lab";
+import { Typography } from "@/components/ui/Typography";
 
 export const revalidate = 0;
 
@@ -17,8 +18,10 @@ export default async function LabPostPage({
   if (!meta) return notFound();
 
   return (
-    <main className="max-w-3xl mx-auto px-6 pt-10 pb-20">
-      <h1 className="text-3xl font-bold mb-4">{meta.title ?? slug}</h1>
+    <main className="max-w-3xl mx-auto px-6 pt-20 pb-20">
+      <Typography as="h1" className="mb-4">
+        {meta.title ?? slug}
+      </Typography>
       {meta.date && <p className="text-sm text-gray-400 mb-6">{meta.date}</p>}
 
       <article className="prose prose-invert max-w-none prose-headings:scroll-mt-24
