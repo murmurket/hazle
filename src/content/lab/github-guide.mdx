@@ -118,6 +118,159 @@ since VS Code sometimes reversed PR direction or failed to refresh correctly.
         git merge origin/main
     ```
 
+---
+
+## Recommended Branch Strategy
+
+<table>
+  <thead>
+    <tr>
+      <th>Environment</th>
+      <th>Suggested Branches</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Personal / Small team</td>
+      <td><code>main</code> + <code>staging</code> + <code>feature/*</code></td>
+    </tr>
+    <tr>
+      <td>Mid-size team</td>
+      <td><code>main</code> + <code>develop</code> + <code>feature/*</code></td>
+    </tr>
+    <tr>
+      <td>QA / Pre-prod team</td>
+      <td><code>main</code> + <code>staging</code> + <code>develop</code> + <code>feature/*</code></td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Example Command
+```bash
+    // Commit message example
+    git commit -m "fix: resolve merge conflict in LabGrid component"
+```export const metadata = {
+  title: "Git Workflow — Personal Notes",
+  date: "2025-08-17",
+  excerpt: "Difficulties with VS Code Source Control, step-by-step Git workflow, PR directions, and recommended branch strategies.",
+  tags: ["git", "workflow", "vscode", "branching", "notes"],
+  draft: false,
+};
+
+This post documents my **experience and difficulties** with Git workflow,  
+especially the transition from terminal-only usage to **VS Code + GitHub UI**.
+
+> Initially, I only used Git in the terminal and didn’t realize that VS Code had a **Source Control** section.  
+> After reading another developer’s blog, I discovered it, but I struggled to understand it and got stuck multiple times.  
+
+💡 **Current Setup**  
+- Development: VS Code + Terminal  
+- PR creation/merge: GitHub Web UI  
+
+---
+
+## Problems Encountered
+
+<table>
+  <thead>
+    <tr>
+      <th>Situation</th>
+      <th>Issue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Branch name changed</td>
+      <td>Old cache caused PR to open in wrong direction</td>
+    </tr>
+    <tr>
+      <td>Existing PR already on remote</td>
+      <td>Error: “PR already open” → confusing</td>
+    </tr>
+    <tr>
+      <td>Status checks mid-update</td>
+      <td>Refresh issue → Merge button disappeared, UI looked fine but broken</td>
+    </tr>
+  </tbody>
+</table>
+
+👉 Conclusion: **GitHub Web UI is more reliable** than VS Code PR extension,  
+since VS Code sometimes reversed PR direction or failed to refresh correctly.
+
+---
+
+## Step-by-Step Workflow
+
+### ① Feature Development
+
+1. Keep `main` up to date:
+    ```bash
+        git checkout main
+        git pull origin main
+    ```
+
+2. Checkout feature branch:
+    ```bash
+        git checkout -b feature/new-update
+        # or
+        git checkout feature/new-update
+        git merge origin/main
+    ```
+
+3. Implement feature (code)  
+4. Stage & commit:
+    ```bash
+        git add .
+        git commit -m "feat: add search bar"
+    ```
+
+### ② Merge to Staging
+
+5. Push feature branch:
+    ```bash
+        git push origin feature/new-update
+    ```
+
+6. On GitHub → create PR → **base=staging, compare=feature/new-update**  
+7. Check Netlify ✅ build  
+8. Merge PR (feature → staging)  
+9. (Optional) Delete feature branch after merge  
+
+### ③ Release to Main (Deployment)
+
+10. On GitHub → create PR → **base=main, compare=staging**  
+11. Check Netlify ✅ build  
+12. Merge PR (staging → main)  
+
+### ④ Sync Local Branches
+    ```bash
+        git checkout staging
+        git pull origin staging
+        git checkout main
+        git pull origin main
+    ```
+
+---
+
+## Tips
+
+- Start next feature:  
+    ```bash
+        git checkout -b feature/xxx
+    ```
+
+- Delete feature branch after merge:  
+    ```bash
+        git branch -d feature/xxx
+    ```
+
+- After merging multiple features, refresh staging with:  
+    ```bash
+        git merge origin/main
+    ```
+
 - If Updates were rejected because the tip of your current branch is behind
     ```bash
       # 0) curent branch check

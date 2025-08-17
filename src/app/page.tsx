@@ -77,18 +77,7 @@ const PfSection = memo(function PfSection({
       <div ref={ref}>
         <PortfolioCarousel items={carousel} />
       </div>
-
-      <motion.h2
-        id={`${sectionId}-title`}
-        style={{ y }}
-        className={clsx(
-          baseStyles.h2,
-          "text-center",
-          titleIsLong && "text-3xl"
-        )}
-      >
-        {title}
-      </motion.h2>
+      <motion.h1 style={{ y, textAlign: "center"  }}>{title}</motion.h1>
     </section>
   );
 });
