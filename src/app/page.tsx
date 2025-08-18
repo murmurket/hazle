@@ -1,17 +1,18 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, memo } from "react";
 import {
   motion,
   useScroll,
   useSpring,
   useTransform,
-  MotionValue
+  MotionValue,
 } from "framer-motion";
 import clsx from "clsx";
+import dynamic from "next/dynamic";
 import { baseStyles } from "@/components/ui/Typography";
 
-import PortfolioCarousel from "@/components/PortfolioCarousel";
+import type { CarouselItem } from "@/types/portfolio";
 import cepBranding from "@/data/cepBranding";
 import pangeaBranding from "@/data/pangeaBranding";
 import cmsSiteItems from "@/data/cmsSiteItems";
@@ -19,84 +20,103 @@ import bookingSystem from "@/data/bookingSystem";
 import customDevelopment from "@/data/customDevelopment";
 import graphicDesign from "@/data/graphicDesign";
 
+// ============================================================
+// Portfolio section data (stable across renders)
+// ============================================================
+type PfItem = {
+  sectionId: string;
+  title: string;
+  carousel: CarouselItem[];
+};
+
+const PF_ITEMS: PfItem[] = [
+  { sectionId: "cepDental", title: "CEP Education", carousel: cepBranding },
+  { sectionId: "pangeaDentalWorld", title: "Pangea Platform", carousel: pangeaBranding },
+  { sectionId: "cmsSiteItems", title: "CMS Sites", carousel: cmsSiteItems },
+  { sectionId: "bookingSystem", title: "Booking System", carousel: bookingSystem },
+  { sectionId: "customDevelopment", title: "Custom Development", carousel: customDevelopment },
+  { sectionId: "graphicDesign", title: "Graphic Design", carousel: graphicDesign },
+];
+
+// ============================================================
+// Dynamic import for heavy component (code splitting)
+// ============================================================
+const PortfolioCarousel = dynamic(() => import("@/components/PortfolioCarousel"), {
+  ssr: false,
+  loading: () => <div className="h-64 w-full animate-pulse rounded-2xl bg-gray-100" />,
+});
+
+// ============================================================
+// Hook for parallax effect
+// ============================================================
 function useParallax(value: MotionValue<number>, distance: number) {
   return useTransform(value, [0, 1], [-distance, distance]);
 }
 
-function PfType({ id }: { id: number }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref });
-  const y = useParallax(scrollYProgress, 300);
+// ============================================================
+// Portfolio Section Component
+// ============================================================
+type PfSectionProps = PfItem & { parallaxDistance?: number };
 
-  const pfInfo = [
-    {
-      sectionId: "cepDental",
-      title: "CEP Education",
-      carousel: cepBranding
-    },
-    {
-      sectionId: "pangeaDentalWorld",
-      title: "Pangea Platform",
-      carousel: pangeaBranding
-    },
-    {
-      sectionId: "cmsSiteItems",
-      title: "CMS Sites",
-      carousel: cmsSiteItems
-    },
-    {
-      sectionId: "bookingSystem",
-      title: "Booking System",
-      carousel: bookingSystem
-    },
-    {
-      sectionId: "customDevelopment",
-      title: "Custom Development",
-      carousel: customDevelopment
-    },
-    {
-      sectionId: "graphicDesign",
-      title: "Graphic Design",
-      carousel: graphicDesign
-    },
-  ];
-  const { sectionId, carousel, title } = pfInfo[id];
+const PfSection = memo(function PfSection({
+  sectionId,
+  title,
+  carousel,
+  parallaxDistance = 300,
+}: PfSectionProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"], // smooth in/out scroll effect
+  });
+  const y = useParallax(scrollYProgress, parallaxDistance);
+
+  const titleIsLong = title.length > 18;
 
   return (
-    <section className="px-10">
-      <div ref={ref} id={sectionId}>
+    <section className="px-10" id={sectionId} aria-labelledby={`${sectionId}-title`}>
+      <div ref={ref}>
         <PortfolioCarousel items={carousel} />
       </div>
-      <motion.h1
-        style={{ y, textAlign: "center" }}
+
+      <motion.h2
+        id={`${sectionId}-title`}
+        style={{ y }}
         className={clsx(
-          baseStyles.h1,
-          title.length > 20 && "text-3xl"
+          baseStyles.h2,
+          "text-center",
+          titleIsLong && "text-3xl"
         )}
       >
         {title}
-      </motion.h1>
+      </motion.h2>
     </section>
   );
-}
+});
 
+// ============================================================
+// Page Component
+// ============================================================
 export default function Home() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
-    restDelta: 0.001
+    restDelta: 0.001,
   });
 
   return (
     <div>
+      {/* Unique page-level heading (screen-reader only) */}
+      <h1 className={clsx(baseStyles.h1, "sr-only")}>Portfolio</h1>
+
       <main className="pt-16 space-y-10" id="home_main">
-        <>
-          {[0, 1, 2, 3, 4, 5].map((pfType) => (
-            <PfType key={pfType} id={pfType} />
-          ))}
-          <motion.div className="progress" style={{ scaleX }} />
-        </>  
+        {PF_ITEMS.map((item) => (
+          <PfSection key={item.sectionId} {...item} />
+        ))}
+
+        {/* Progress bar */}
+        <motion.div className="progress" style={{ scaleX }} />
       </main>
     </div>
   );
