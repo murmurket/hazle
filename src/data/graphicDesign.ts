@@ -1,12 +1,47 @@
-const graphicDesign = [
-    { id: 1, title: "Catalog", image: "/portfolio/jireh.jpg" },
-    { id: 2, title: "F&B Menu", image: "/portfolio/bacchus_menu.jpg" },
-    { id: 3, title: "Event Planing", image: "/portfolio/hankki_event.jpg" },
-    { id: 4, title: "Humorous", image: "/portfolio/hankki_sns.jpg" },
-    { id: 5, title: "Rustic", image: "/portfolio/kims_sns.jpg" },
-    { id: 6, title: "Minimal", image: "/portfolio/ryuko_sns.jpg" },
-    { id: 7, title: "Funky", image: "/portfolio/spacerobo_sns.jpg" },
-    { id: 8, title: "Playful", image: "/portfolio/treehousetoys_sns.jpg" },
+import type { CarouselItem } from "@/types/portfolio";
+
+// Graphic design portfolio items
+const graphicDesign: CarouselItem[] = [
+  {
+    title: "Catalog",
+    src: "/portfolio/jireh.jpg",
+    alt: "Product catalog design sample",
+  },
+  {
+    title: "F&B Menu",
+    src: "/portfolio/bacchus_menu.jpg",
+    alt: "Food and beverage menu design sample",
+  },
+  {
+    title: "Event Planning",
+    src: "/portfolio/hankki_event.jpg",
+    alt: "Event planning poster design sample",
+  },
+  {
+    title: "Humorous",
+    src: "/portfolio/hankki_sns.jpg",
+    alt: "Humorous social media design sample",
+  },
+  {
+    title: "Rustic",
+    src: "/portfolio/kims_sns.jpg",
+    alt: "Rustic style graphic design sample",
+  },
+  {
+    title: "Minimal",
+    src: "/portfolio/ryuko_sns.jpg",
+    alt: "Minimal style graphic design sample",
+  },
+  {
+    title: "Funky",
+    src: "/portfolio/spacerobo_sns.jpg",
+    alt: "Funky style graphic design sample",
+  },
+  {
+    title: "Playful",
+    src: "/portfolio/treehousetoys_sns.jpg",
+    alt: "Playful style graphic design sample",
+  },
 ];
 
 export default graphicDesign;
