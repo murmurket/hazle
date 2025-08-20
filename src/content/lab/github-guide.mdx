@@ -118,6 +118,24 @@ since VS Code sometimes reversed PR direction or failed to refresh correctly.
         git merge origin/main
     ```
 
+- If Updates were rejected because the tip of your current branch is behind
+    ```bash
+      # 0) curent branch check
+      git branch --show-current
+
+      # 1) get new commit + rebase my commit
+      git pull --rebase origin feature/new-update
+
+      # (update if conflicts →)
+      # after update
+      git add <conflict files>
+      git rebase --continue
+      # repeat if needed
+
+      # 2) push to Github
+      git push origin feature/new-update
+    ```
+
 ---
 
 ## Recommended Branch Strategy
