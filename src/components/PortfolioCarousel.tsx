@@ -101,14 +101,14 @@ const PortfolioCarousel = ({ items, className }: CarouselProps) => {
 
                 {/* Gradient overlay with centered title */}
                 <div className="pointer-events-none absolute inset-0 flex items-end justify-center rounded-lg bg-gradient-to-t from-black/80 via-black/20 to-transparent p-3">
-                  <h2
+                  <h3
                     className={clsx(
                       "top-3/4 text-center font-medium text-white",
                       hasLongTitle ? "text-sm" : "text-md"
                     )}
                   >
                     {item.title}
-                  </h2>
+                  </h3>
                 </div>
               </div>
             </div>
