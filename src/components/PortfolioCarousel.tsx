@@ -4,36 +4,36 @@ import { useState, useCallback } from "react";
 import Slider from "react-slick";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import Modal from "@/components/Modal";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import clsx from "clsx";
-
-interface CarouselItem {
-  id: number;
-  title: string;
-  image: string;
-  links?: { url: string; text: string }[]; // 여러 개의 링크 가능
-}
+import Modal from "@/components/Modal";
+import type { CarouselItem } from "@/types/portfolio";
 
 interface CarouselProps {
   items: CarouselItem[];
+  className?: string;
 }
 
-const PortfolioCarousel = ({ items }: CarouselProps) => {
+const PortfolioCarousel = ({ items, className }: CarouselProps) => {
+  // Modal state (adapted to Modal's current props: `image` + `links`)
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<{ image: string; links?: { url: string; text: string }[] } | null>(null);
+  const [selected, setSelected] = useState<{ src: string; links?: { url: string; text: string }[] } | null>(null);
+
+  // Track dragging to avoid click while swiping
   const [isDragging, setIsDragging] = useState(false);
 
-  const openModal = useCallback((image: string, links?: { url: string; text: string }[]) => {
-    if (!isDragging) { // 드래그 중일 때는 클릭 무시
-      setSelectedImage({ image, links });
+  const openModal = useCallback(
+    (src: string, links?: { url: string; text: string }[]) => {
+      if (isDragging) return; // ignore click while dragging
+      setSelected({ src, links });
       setIsModalOpen(true);
-    }
-  }, [isDragging]);
+    },
+    [isDragging]
+  );
 
   const closeModal = useCallback(() => {
-    setSelectedImage(null);
+    setSelected(null);
     setIsModalOpen(false);
   }, []);
 
@@ -50,72 +50,79 @@ const PortfolioCarousel = ({ items }: CarouselProps) => {
     centerMode: true,
     centerPadding: "0",
     responsive: [
-      {
-        breakpoint: 768, // 768px 이하일 때 (모바일)
-        settings: {
-          slidesToShow: 1, // 모바일에서 1개 슬라이드 표시
-        },
-      },{
-        breakpoint: 1200,
-        settings: {
-          slidesToShow: 2,
-        },
-      },{
-        breakpoint: 1920,
-        settings: {
-          slidesToShow: 3,
-        },
-      },{
-        breakpoint: 3000,
-        settings: {
-          slidesToShow: 4,
-        },
-      },
+      // Mobile first: show 1 slide
+      { breakpoint: 768, settings: { slidesToShow: 1 } },
+      { breakpoint: 1200, settings: { slidesToShow: 2 } },
+      { breakpoint: 1920, settings: { slidesToShow: 3 } },
+      { breakpoint: 3000, settings: { slidesToShow: 4 } },
     ],
-    beforeChange: () => setIsDragging(true), // 드래그 시작 시
-    afterChange: () => setTimeout(() => setIsDragging(false), 100), // 드래그 끝난 후 잠시 후 해제
+    beforeChange: () => setIsDragging(true),
+    afterChange: () => setTimeout(() => setIsDragging(false), 100),
+    // Consider `lazyLoad: "ondemand"` if images are heavy
   };
 
   return (
-    <motion.div className="mt-20 w-full max-w-[100vw] perspective-1000">
+    <motion.div
+      className={clsx("mt-20 w-full max-w-[100vw] perspective-[1000px]", className)}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Portfolio items"
+    >
       <Slider {...settings} className="custom-carousel">
-        {items.map((item) => (
-          <div key={item.id} className="p-4">
-            <div
-              className="h-64 flex justify-center items-center relative cursor-pointer"
-              onClick={() => openModal(item.image, item.links)} // 이미지 클릭 시 드래그 여부 확인 후 모달 열기
-            >
-              <Image
-                src={item.image}
-                alt={`${item.title} Portfolio`}
-                fill
-                className="object-cover object-top rounded-lg"
-                priority={item.id === 1} // 첫 번째 이미지는 우선 로드
-                loading={item.id === 1 ? "eager" : "lazy"} // 나머지는 lazy 로드
-                sizes="(max-width: 768px) 100vw, 50vw" // 반응형 이미지 설정
-              />
-              <div className="absolute top-0 right-0 inset-0 flex items-center justify-center bg-black/50 text-white">
-                <h2
-                  className={clsx(
-                    "top-3/4 text-md text-center font-medium",
-                    item.title.length > 20 && "text-sm"
-                  )}
-                >
-                  {item.title}
-                </h2>
+        {items.map((item, idx) => {
+          const key = `${item.title}-${idx}`;
+          const hasLongTitle = item.title.length > 20;
+
+          return (
+            <div key={key} className="p-4" aria-roledescription="slide" aria-label={`${idx + 1} of ${items.length}`}>
+              <div
+                className="relative flex h-64 cursor-pointer items-center justify-center"
+                onClick={() => openModal(item.src, item.links)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    openModal(item.src, item.links);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+                aria-label={`Open details for ${item.title}`}
+              >
+                <Image
+                  src={item.src}
+                  alt={item.alt ?? item.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="rounded-lg object-cover object-top"
+                  // Prioritize first couple of images for faster LCP
+                  priority={idx < 2}
+                  loading={idx < 2 ? "eager" : "lazy"}
+                />
+
+                {/* Gradient overlay with centered title */}
+                <div className="pointer-events-none absolute inset-0 flex items-end justify-center rounded-lg bg-gradient-to-t from-black/80 via-black/20 to-transparent p-3">
+                  <h3
+                    className={clsx(
+                      "top-3/4 text-center font-medium text-white",
+                      hasLongTitle ? "text-sm" : "text-md"
+                    )}
+                  >
+                    {item.title}
+                  </h3>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </Slider>
 
-      {/* Modal 컴포넌트 */}
-      {selectedImage && (
-        <Modal 
-          image={selectedImage.image} 
-          isOpen={isModalOpen} 
-          onClose={closeModal} 
-          links={selectedImage.links} // 선택된 이미지의 링크 전달
+      {/* Modal */}
+      {selected && (
+        <Modal
+          image={selected.src}     // Modal still expects `image` prop
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          links={selected.links}
         />
       )}
     </motion.div>

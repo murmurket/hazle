@@ -118,6 +118,24 @@ since VS Code sometimes reversed PR direction or failed to refresh correctly.
         git merge origin/main
     ```
 
+- If Updates were rejected because the tip of your current branch is behind
+    ```bash
+      # 0) curent branch check
+      git branch --show-current
+
+      # 1) get new commit + rebase my commit
+      git pull --rebase origin feature/new-update
+
+      # (update if conflicts →)
+      # after update
+      git add <conflict files>
+      git rebase --continue
+      # repeat if needed
+
+      # 2) push to Github
+      git push origin feature/new-update
+    ```
+
 ---
 
 ## Recommended Branch Strategy
@@ -152,3 +170,17 @@ since VS Code sometimes reversed PR direction or failed to refresh correctly.
     // Commit message example
     git commit -m "fix: resolve merge conflict in LabGrid component"
 ```
+
+---
+
+## Commit texts
+
+- feat: A new feature.
+- fix: A bug fix.
+- chore: Routine tasks, maintenance, or build process changes.
+- docs: Documentation-only changes.
+- style: Changes that do not affect the meaning of the code (whitespace, formatting, semicolons, etc.).
+- refactor: A code change that neither fixes a bug nor adds a feature.
+- test: Adding missing tests or correcting existing tests.
+- build: Changes that affect the build system or external dependencies.
+- ci: Changes to CI configuration files and scripts.
