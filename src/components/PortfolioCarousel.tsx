@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import clsx from "clsx";
+
 import Modal from "@/components/Modal";
 import type { CarouselItem } from "@/types/portfolio";
 

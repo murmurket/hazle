@@ -77,7 +77,6 @@ const PfSection = memo(function PfSection({
       <div ref={ref}>
         <PortfolioCarousel items={carousel} />
       </div>
-
       <motion.h2
         id={`${sectionId}-title`}
         style={{ y }}
