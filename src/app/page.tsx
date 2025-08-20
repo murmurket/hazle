@@ -18,7 +18,6 @@ import pangeaBranding from "@/data/pangeaBranding";
 import cmsSiteItems from "@/data/cmsSiteItems";
 import bookingSystem from "@/data/bookingSystem";
 import customDevelopment from "@/data/customDevelopment";
-import graphicDesign from "@/data/graphicDesign";
 
 // ============================================================
 // Portfolio section data (stable across renders)
@@ -32,10 +31,10 @@ type PfItem = {
 const PF_ITEMS: PfItem[] = [
   { sectionId: "cepDental", title: "CEP Education", carousel: cepBranding },
   { sectionId: "pangeaDentalWorld", title: "Pangea Platform", carousel: pangeaBranding },
-  { sectionId: "cmsSiteItems", title: "CMS Sites", carousel: cmsSiteItems },
   { sectionId: "bookingSystem", title: "Booking System", carousel: bookingSystem },
   { sectionId: "customDevelopment", title: "Custom Development", carousel: customDevelopment },
-  { sectionId: "graphicDesign", title: "Graphic Design", carousel: graphicDesign },
+  { sectionId: "cmsSiteItems", title: "CMS Sites", carousel: cmsSiteItems },
+  // { sectionId: "graphicDesign", title: "Graphic Design", carousel: graphicDesign },
 ];
 
 // ============================================================
@@ -62,7 +61,7 @@ const PfSection = memo(function PfSection({
   sectionId,
   title,
   carousel,
-  parallaxDistance = 300,
+  parallaxDistance = 200,
 }: PfSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({

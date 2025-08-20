@@ -1,0 +1,106 @@
+export const metadata = {
+  title: "Operating System, Application Server, and Software — Explained",
+  date: "2025-08-17",
+  excerpt: "Clear breakdown of OS, Application Servers, and Middleware/Software with examples and roles.",
+  tags: ["aws", "devops", "os", "server", "software", "infra"],
+  draft: false,
+};
+
+# Operating System, Application Server, and Software
+
+This post explains the **three key layers of a server environment** — OS, Application Server, and Software/Middleware.  
+Think of it as the skeleton, the office layout, and the furniture/tools inside the office.
+
+---
+
+## 1. Operating System (OS)
+
+The **foundation of a computer system**.  
+It manages hardware resources and provides the environment where applications can run.
+
+- **Examples**
+  - **Linux family**: Amazon Linux (AWS optimized), Ubuntu, Debian, Red Hat Enterprise Linux (RHEL), CentOS, SUSE  
+  - **Windows family**: Windows Server 2019 / 2022  
+  - **Other**: macOS (special case on EC2 `mac1` instances)
+
+- **Roles**
+  - Manage hardware (CPU, memory, disk)  
+  - User permission and access control  
+  - Provide basic networking  
+  - Base layer for running software  
+
+---
+
+## 2. Application Server
+
+The **middle layer that processes user requests**.  
+It runs on top of the OS and serves web applications or APIs.
+
+- **Examples**
+  - **Web Application Servers (WAS)**: Apache Tomcat (Java), WildFly/JBoss (Java EE), WebLogic, WebSphere  
+  - **Web servers often overlapping**: Nginx, Apache HTTP Server, IIS (Windows)
+
+- **Roles**
+  - Handle client requests (HTTP/HTTPS)  
+  - Generate dynamic pages (JSP, PHP, Flask, Node.js, etc.)  
+  - Load balancing & session management  
+  - Expose APIs and execute business logic  
+
+---
+
+## 3. Software / Middleware & Tools
+
+Various tools, libraries, and runtimes that run **on or between the OS and application server**.  
+Includes databases, monitoring agents, runtimes, and developer tools.
+
+- **Examples**
+  - **Databases**: MySQL, PostgreSQL, MariaDB, MongoDB, Redis  
+  - **Runtime environments**: Java (JDK), Python, Node.js, .NET  
+  - **Containers/Virtualization**: Docker, Kubernetes agents  
+  - **Security & management tools**: Fail2Ban, iptables, CloudWatch Agent  
+  - **Dev tools & packages**: Git, Maven, Gradle, npm  
+
+- **Roles**
+  - Data storage & processing  
+  - Support application execution  
+  - Strengthen system management & security  
+  - Enable performance monitoring  
+
+---
+
+## ✅ Summary
+
+<table>
+  <thead>
+    <tr>
+      <th>Layer</th>
+      <th>Role</th>
+      <th>Examples</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Operating System (OS)</td>
+      <td>Connects hardware with software; foundation of all systems</td>
+      <td>Ubuntu, Windows Server, Amazon Linux</td>
+    </tr>
+    <tr>
+      <td>Application Server</td>
+      <td>Handles user requests and executes business logic</td>
+      <td>Tomcat, Nginx, IIS</td>
+    </tr>
+    <tr>
+      <td>Software / Middleware</td>
+      <td>Adds extra functionality such as DB, runtime, monitoring</td>
+      <td>MySQL, Node.js, Docker</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## 👉 Easy Analogy
+
+- **OS** = The **building skeleton**  
+- **Application Server** = The **office layout inside the building**  
+- **Software** = The **furniture and tools placed in the office**  
