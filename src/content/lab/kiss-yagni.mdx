@@ -26,7 +26,7 @@ If you can make something work simply, **do it simply**.
 
 ### 👎 Bad Example: Overcomplicated Conditional Rendering
 
-\`\`\`tsx
+```tsx
 function UserCard({ user }: { user: { name: string; status: string } }) {
   return (
     <div className="card">
@@ -41,11 +41,11 @@ function UserCard({ user }: { user: { name: string; status: string } }) {
     </div>
   );
 }
-\`\`\`
+```
 
 ### ✅ KISS Version
 
-\`\`\`tsx
+```tsx
 const statusStyles: Record<string, string> = {
   online: "text-green-500",
   offline: "text-gray-500",
@@ -62,7 +62,7 @@ function UserCard({ user }: { user: { name: string; status: string } }) {
     </div>
   );
 }
-\`\`\`
+```
 
 ✅ We removed multiple nested ternaries and instead used a clean mapping approach for styles.
 
@@ -77,7 +77,7 @@ Don’t build “just in case.” Build **when it becomes necessary.**
 
 ### 👎 Bad Example: Premature Form Field Setup
 
-\`\`\`tsx
+```tsx
 const [formData, setFormData] = useState({
   name: "",
   email: "",
@@ -86,14 +86,14 @@ const [formData, setFormData] = useState({
   birthday: "",
   hobby: "", // Not actually used anywhere
 });
-\`\`\`
+```
 
 ### ✅ YAGNI Version
 
-\`\`\`tsx
+```tsx
 const [name, setName] = useState("");
 const [email, setEmail] = useState("");
-\`\`\`
+```
 
 ✅ Only track what’s needed for the current feature. Add more when requirements grow.
 
