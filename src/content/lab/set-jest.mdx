@@ -1,0 +1,178 @@
+export const metadata = {
+  title: "Setting Up Jest and React Testing Library in Next.js + TypeScript",
+  date: "2025-08-21",
+  excerpt: "Step-by-step guide on configuring Jest and React Testing Library in a Next.js + TypeScript project, with real error fixes.",
+  tags: ["jest", "react-testing-library", "next.js", "typescript", "testing"],
+  draft: false,
+};
+
+# ✅ Setting Up Jest and React Testing Library in a Next.js + TypeScript Project (with Real Error Fixes)
+
+In this post, I’ll walk you through how I successfully configured **Jest** and **React Testing Library** in my **Next.js + TypeScript** project, along with real-world errors I encountered and how I solved them.
+
+---
+
+## 🔧 Step 1: Install Required Packages
+
+```bash
+npm install --save-dev jest @testing-library/react @testing-library/jest-dom @testing-library/user-event @types/jest
+npm install --save-dev jest-environment-jsdom
+```
+
+---
+
+## ⚙️ Step 2: Create `jest.config.ts`
+
+```ts
+// jest.config.ts
+import type { Config } from "jest";
+
+const config: Config = {
+  preset: "ts-jest",
+  testEnvironment: "jsdom",
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/src/$1", // ✅ for path aliases
+  },
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+};
+
+export default config;
+```
+
+---
+
+## ⚙️ Step 3: Setup `jest.setup.ts`
+
+```ts
+// jest.setup.ts
+import "@testing-library/jest-dom";
+```
+
+---
+
+## ⚙️ Step 4: Create `tsconfig.jest.json`
+
+```json
+// tsconfig.jest.json
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["jest", "@testing-library/jest-dom"]
+  },
+  "include": ["**/*.test.ts", "**/*.test.tsx", "**/__tests__/*"]
+}
+```
+
+---
+
+## ❗ Error #1: ts-node is required
+
+**Error Message:**
+
+```
+Error: Jest: 'ts-node' is required for the TypeScript configuration files. Make sure it is installed
+```
+
+**Solution:**
+
+```bash
+npm install --save-dev ts-node
+```
+
+---
+
+## ❗ Error #2: Module ts-jest not found
+
+**Error Message:**
+
+```
+Module ts-jest in the transform option was not found.
+```
+
+**Solution:**
+
+```bash
+npm install --save-dev ts-jest
+```
+
+---
+
+## ❗ Error #3: Unexpected token '<'
+
+**Error Message:**
+
+```
+Jest failed to parse a file. SyntaxError: Unexpected token '<'
+```
+
+This happens when your JSX is not being transformed correctly.
+
+**Solution:**
+
+- Make sure you’re using `preset: "ts-jest"` in `jest.config.ts`  
+- Ensure your `.tsx` files are included in `tsconfig.jest.json`  
+- Confirm you're using `testEnvironment: "jsdom"`  
+
+---
+
+## ✅ Successful Run
+
+```bash
+npx jest
+```
+
+**Output:**
+
+```
+PASS  src/components/emotion/__tests__/EmotionCard.test.tsx
+  EmotionCard
+    ✓ renders emotion data correctly (26 ms)
+    ✓ renders latest style when isLatest is true (3 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+```
+
+---
+
+## ✅ Example Test File
+
+```tsx
+// src/components/emotion/__tests__/EmotionCard.test.tsx
+
+import { render, screen } from "@testing-library/react";
+import EmotionCard from "../EmotionCard";
+
+const mockLog = {
+  id: "test-id",
+  created_at: "2025-08-21T10:00:00Z",
+  main_emotion: "joy",
+  mood_tags: ["happy", "grateful"],
+  gpt_comment: "You seemed joyful today!",
+  recommended_routine: "Take a walk and smile!",
+};
+
+describe("EmotionCard", () => {
+  it("renders emotion data correctly", () => {
+    render(<EmotionCard log={mockLog} />);
+    expect(screen.getByText(/joy/i)).toBeInTheDocument();
+    expect(screen.getByText(/Take a walk/i)).toBeInTheDocument();
+  });
+
+  it("renders latest style when isLatest is true", () => {
+    render(<EmotionCard log={mockLog} isLatest />);
+    const card = screen.getByText(/joy/i).closest("div");
+    expect(card?.className).toMatch(/emerald/);
+  });
+});
+```
+
+---
+
+## 🎯 Final Thoughts
+
+Setting up testing in a Next.js project using TypeScript isn't always smooth. You’ll likely run into errors like I did. But with the right configuration (`ts-jest`, `ts-node`, `jest-environment-jsdom`, `moduleNameMapper`), you'll get it working reliably.
+
+If you're using alias paths (like `@/components/...`), don’t forget to configure `moduleNameMapper` in `jest.config.ts`.
+
+Hope this helps anyone setting up a modern test stack with React, Next.js, and TypeScript!
