@@ -1,0 +1,152 @@
+export const metadata = {
+  title: "KISS and YAGNI: Keep Your Code Clean and Focused",
+  date: "2025-08-21",
+  excerpt: "Learn how KISS and YAGNI principles help you write better software by staying simple and avoiding premature complexity.",
+  tags: ["clean code", "best practices", "software engineering", "KISS", "YAGNI"],
+  draft: false,
+};
+
+# 🧼 KISS & YAGNI: Keep Your Code Clean and Focused
+
+Modern software projects often grow messy—not because developers lack skill, but because they **overbuild or overcomplicate** too early. That’s where two timeless principles come in:
+
+- **KISS**: *Keep It Simple, Stupid*  
+- **YAGNI**: *You Aren’t Gonna Need It*
+
+Let’s break them down and see how they apply in real-world frontend codebases.
+
+---
+
+## ✅ What is KISS?
+
+> **KISS** stands for *Keep It Simple, Stupid*.
+
+It encourages developers to avoid unnecessary complexity.  
+If you can make something work simply, **do it simply**.
+
+### 👎 Bad Example: Overcomplicated Conditional Rendering
+
+```tsx
+function UserCard({ user }: { user: { name: string; status: string } }) {
+  return (
+    <div className="card">
+      <h2>{user.name}</h2>
+      {user.status === "online" ? (
+        <p style={{ color: "green", fontWeight: "bold" }}>Online</p>
+      ) : user.status === "offline" ? (
+        <p style={{ color: "gray", fontWeight: "bold" }}>Offline</p>
+      ) : (
+        <p style={{ color: "orange", fontWeight: "bold" }}>Away</p>
+      )}
+    </div>
+  );
+}
+```
+
+### ✅ KISS Version
+
+```tsx
+const statusStyles: Record<string, string> = {
+  online: "text-green-500",
+  offline: "text-gray-500",
+  away: "text-orange-500",
+};
+
+function UserCard({ user }: { user: { name: string; status: string } }) {
+  return (
+    <div className="card">
+      <h2>{user.name}</h2>
+      <p className={`${statusStyles[user.status] ?? "text-black"} font-bold`}>
+        {user.status}
+      </p>
+    </div>
+  );
+}
+```
+
+✅ We removed multiple nested ternaries and instead used a clean mapping approach for styles.
+
+---
+
+## ✅ What is YAGNI?
+
+> **YAGNI** stands for *You Aren’t Gonna Need It*.
+
+This principle tells you **not to implement features unless they are truly needed now.**  
+Don’t build “just in case.” Build **when it becomes necessary.**
+
+### 👎 Bad Example: Premature Form Field Setup
+
+```tsx
+const [formData, setFormData] = useState({
+  name: "",
+  email: "",
+  phone: "",
+  address: "",
+  birthday: "",
+  hobby: "", // Not actually used anywhere
+});
+```
+
+### ✅ YAGNI Version
+
+```tsx
+const [name, setName] = useState("");
+const [email, setEmail] = useState("");
+```
+
+✅ Only track what’s needed for the current feature. Add more when requirements grow.
+
+---
+
+## ✅ Real-World Refactoring Case
+
+**Scenario: Overengineered User Status**
+
+- You want to render a user's status in green/gray/orange depending on their current state.  
+- Initially written with nested ternaries and inline styles.  
+- You apply **KISS** to simplify rendering logic.  
+- You apply **YAGNI** to avoid adding states like `"banned"` or `"suspended"` until the product actually needs them.  
+
+---
+
+## 📊 Summary Table
+
+<table>
+  <thead>
+    <tr>
+      <th>Principle</th>
+      <th>Meaning</th>
+      <th>Key Idea</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>KISS</strong></td>
+      <td>Keep It Simple, Stupid</td>
+      <td>Prioritize clarity and simplicity over cleverness</td>
+    </tr>
+    <tr>
+      <td><strong>YAGNI</strong></td>
+      <td>You Aren’t Gonna Need It</td>
+      <td>Don’t build things unless they are needed right now</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## 🧠 Takeaway
+
+Both **KISS** and **YAGNI** will help you:
+
+- Avoid technical debt  
+- Improve readability and maintainability  
+- Focus on delivering only what matters  
+
+Next time you reach for that "future-proof abstraction" or "maybe-needed state variable"—pause and ask:
+
+> ✅ Is it simple enough?  
+> ✅ Do I really need it *now*?
+
+When in doubt, keep it clean. Keep it simple.
