@@ -1,0 +1,164 @@
+export const metadata = {
+  title: "What I Learned About Supabase Auth in Next.js App Router",
+  date: "2025-08-28",
+  excerpt: "Lessons learned from building Murmuin — an emotion-tracking app with Supabase Auth and Next.js App Router.",
+  tags: ["next.js", "supabase", "auth", "app router", "rsc"],
+  draft: false,  
+};
+
+I’m currently building **Murmuin**, an app that tracks user emotions like a diary and recommends a matching yoga flow routine.  
+All logs and routines are stored in Supabase and visualized as a history graph.  
+
+Sounds simple enough — until I hit the wall of *“where do I call Supabase, and which client should I use?”* 🤯
+
+Here’s what I figured out after a couple of weeks of trial and error.
+
+---
+
+## High-Level Component Map
+
+```bash
+flowchart LR
+  subgraph Browser [Client (Browser)]
+    CC[Client Components\nUI: forms, buttons\n↳ supabase.auth.signOut()]
+    Nav[Next Router\npush/replace/refresh]
+  end
+
+  subgraph AppRouter [Next.js App Router (Server)]
+    RSC[Server Components (RSC)\n↳ createSupabaseRSC()\n↳ auth.getUser() (read-only)]
+    SA["Server Actions ('use server')\n↳ createSupabaseForRouteOrAction()"]
+    RH[Route Handlers /api/*\n↳ createSupabaseForRouteOrAction()]
+    MW[Middleware\n↳ createServerClient(@supabase/ssr)\n↳ refresh cookies]
+    CB[/callback route\nexchangeCodeForSession(code)]
+  end
+
+  subgraph Supabase [Supabase]
+    Auth[Auth\n(verify user, issue/rotate cookies)]
+    DB[(Postgres)\nRLS enforced]
+  end
+
+  CC <--> Nav
+  CC -->|fetch /api/*| RH
+  CC -->|navigate /callback?code=...| CB
+  RSC -->|read| DB
+  SA -->|read/write| DB
+  RH -->|read/write| DB
+  MW -->|refresh| Auth
+  CB -->|exchangeCodeForSession| Auth
+  RSC -->|getUser()| Auth
+  SA -->|getUser()| Auth
+  RH -->|getUser()| Auth
+```
+
+This map helped me stop guessing.  
+It shows **which layer is allowed to talk to Supabase** and what kind of client I should use there.
+
+---
+
+## Auth Lifecycle (Sequence)
+
+```bash
+sequenceDiagram
+  participant U as User (Browser)
+  participant MW as Next Middleware
+  participant RSC as RSC / Pages
+  participant RH as API Routes / Server Actions
+  participant CB as /callback
+  participant AUTH as Supabase Auth
+  participant DB as Supabase DB (RLS)
+
+  Note over U: User clicks "Sign in" (OAuth)
+  U->>AUTH: Provider redirect → Auth
+  AUTH-->>U: Redirect to /callback?code=...
+
+  U->>CB: GET /callback?code=...
+  CB->>AUTH: exchangeCodeForSession(code)
+  AUTH-->>CB: Set session cookies (via res.cookies)
+  CB-->>U: Redirect to app (e.g., "/")
+
+  U->>MW: Any request
+  MW->>AUTH: auth.getSession() (refresh if needed)
+  MW-->>U: Forward with refreshed cookies
+
+  U->>RSC: Server-rendered page
+  RSC->>AUTH: auth.getUser() (verified)
+  alt user ok
+    RSC->>DB: read (RLS: user_id = auth.uid())
+  else no user
+    RSC-->>U: redirect(/login?redirectTo=...)
+  end
+
+  U->>RH: POST /api/... or Server Action
+  RH->>AUTH: auth.getUser() (verified)
+  RH->>DB: read/write under RLS
+  RH-->>U: JSON response
+
+  Note over U: User clicks "Logout"
+  U->>AUTH: supabase.auth.signOut() (client)
+  U->>MW: Next request → cookies cleared/rotated
+```
+
+The key for me:  
+- ✅ **Always use `auth.getUser()` on the server.**  
+- ❌ Don’t rely on `auth.getSession()` for access control (that one is just for refresh).  
+
+---
+
+## Data Access Patterns
+
+- **RSC / Layouts** → `createSupabaseRSC()` (read-only) + `auth.getUser()` → gate pages & server reads  
+- **Server Actions / API Routes** → `createSupabaseForRouteOrAction()` (write-enabled) → safe writes & trusted reads  
+- **Middleware** → `createServerClient(@supabase/ssr)` + `auth.getSession()` → refresh cookies, protect routes  
+- **Client Components** → `createSupabaseBrowserClient()` (UI only) + `auth.signOut()` → ❌ don’t do access control  
+
+---
+
+## Key Files in My Project
+
+- `src/lib/supabaseServerReadOnly.ts` → `createSupabaseRSC()`  
+- `src/lib/supabaseServerWrite.ts` → `createSupabaseForRouteOrAction()`  
+- `src/middleware.ts` → SSR cookie refresh & protection  
+- `/callback/route.ts` → `exchangeCodeForSession`  
+- Everywhere → `auth.getUser()`  
+
+---
+
+## RLS & Table Policies
+
+I turned RLS **ON** for: `users`, `emotion_logs`, `routine_logs`.
+
+```sql
+using ( user_id = auth.uid() )
+with check ( user_id = auth.uid() )
+```
+
+This way, even if I screw up in the frontend, Postgres won’t let another user’s data slip through.  
+
+---
+
+## Pitfalls I Hit 😅
+
+- ❌ Tried calling a write client from RSC/layout → “Cookies can only be modified from a Server Action”  
+- ❌ Tried using `auth.getSession()` on server → always null  
+- ❌ Kept some old `/api/auth/set` cookie sync logic → totally unnecessary  
+- ❌ Mixed `@supabase/auth-helpers-nextjs` with `@supabase/ssr` → pure chaos  
+
+---
+
+## What’s Next
+
+- **Better error handling**: split 401 (redirect to login) vs 403 (show error)  
+- **Deployment sanity checks**: verify cookie rotation in Netlify/Vercel prod env  
+- **Security audit**: ensure Service Role Key never leaks to client  
+
+---
+
+## Outro
+
+If you’re building with **Supabase + Next.js App Router**, my advice is:  
+👉 draw the map first, then implement.  
+It saved me from tons of guesswork and mysterious cookie errors.  
+
+And if you ever see `Cookies can only be modified from a Server Action` — well, now you know why. 😉
+
+---
