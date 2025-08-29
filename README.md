@@ -1,9 +1,18 @@
-# Lab Platform
+# Hazle — Portfolio & Lab Platform
 
-A personal portfolio site built with **Next.js + TypeScript**, featuring a Lab publishing system powered by Supabase.
-The site includes portfolio projects, a Lab blog, and admin-only content management.
+A full-stack personal portfolio built with **Next.js + Supabase**, featuring:  
+- 📂 A **Lab publishing system** for experiments and dev logs
+- 🎨 A **Portfolio showcase** of projects and case studies 
 
-🔗 Live Site: [hazle.netlify.app](https://staging--hazle.netlify.app/)
+🔗 Live Site: [hazle.netlify.app](https://staging--hazle.netlify.app/)  
+🔗 Production: [hazle.vercel.app](https://hazle.vercel.app)  
+
+## ✨ Highlights
+
+- End-to-end **content platform** built from scratch (no CMS)  
+<!-- - **Supabase RLS policies** for secure admin-only write access  (under construction) -->
+- **Dynamic MDX rendering** integrated with Supabase storage  
+- **Dual deployment pipeline** (Netlify staging, Vercel production)  
 
 ---
 
@@ -15,7 +24,9 @@ The site includes portfolio projects, a Lab blog, and admin-only content managem
 - **Markdown/MDX**: [next-mdx-remote](https://github.com/hashicorp/next-mdx-remote) + Supabase Posts Table
 - **Image Optimization**: Next.js `Image` component with support for unoptimized GIFs, blurDataURL
 
-- **Deployment**: [Netlify](https://netlify.com/) CI + Preview builds
+- **Deployment strategy**:  
+- **Main (Production)** → deployed on [Vercel](https://vercel.com/)  
+- **Staging + Feature branches** → deployed on [Netlify](https://netlify.com/) CI +  preview builds  
 
 ---
 
@@ -219,12 +230,11 @@ cover: "/images/post-cover.jpg"
 
 ## 🔁 Branch & Deployment Workflow
 
-- Develop new features on `feat/*` branches  
-- When the feature is complete → open a PR into `staging` (and merge)  
-- Wait for the Netlify deploy preview to pass  
-- Open a PR from `staging` → `main` and merge
+1. Work on new features in `feat/*` branches → auto-deploy to **Netlify preview**  
+2. Merge PRs into `staging` → full preview on **Netlify**  
+3. After tests pass, Open a PR from `staging → main` → auto-deploy to **Vercel (production)**  
 
-⚠️ The `main` branch is configured as a **Protected Branch**,  
+⚠️ The `main`, `staging` branches are configured as a **Protected Branch**,  
 so direct `git push` is **not allowed**.  
 Updates must be done **via Pull Request only**,  
 and the Netlify preview check (`netlify/hazle/deploy-preview`)  
