@@ -19,6 +19,8 @@ import cmsSiteItems from "@/data/cmsSiteItems";
 import bookingSystem from "@/data/bookingSystem";
 import customDevelopment from "@/data/customDevelopment";
 
+import HomeSectionObserver from '@/components/home/HomeSectionObserver';
+
 // ============================================================
 // Portfolio section data (stable across renders)
 // ============================================================
@@ -107,9 +109,9 @@ export default function Home() {
   return (
     <div>
       {/* Unique page-level heading (screen-reader only) */}
-      <h1 className={clsx(baseStyles.h1, "sr-only")}>Portfolio</h1>
-
-      <main className="pt-16 space-y-10" id="home_main">
+      <HomeSectionObserver />
+      <main className="pt-16" id="home_main">
+        <h1 className={clsx(baseStyles.h1, "sr-only")}>Portfolio</h1>
         {PF_ITEMS.map((item) => (
           <PfSection key={item.sectionId} {...item} />
         ))}
