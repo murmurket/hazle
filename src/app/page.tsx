@@ -19,6 +19,7 @@ import cmsSiteItems from "@/data/cmsSiteItems";
 import bookingSystem from "@/data/bookingSystem";
 import customDevelopment from "@/data/customDevelopment";
 
+import Hero from '@/components/home/Hero';
 import HomeSectionObserver from '@/components/home/HomeSectionObserver';
 
 // ============================================================
@@ -31,6 +32,7 @@ type PfItem = {
 };
 
 const PF_ITEMS: PfItem[] = [
+  { sectionId: "hero", title: "", carousel: [] },
   { sectionId: "cepDental", title: "CEP Education", carousel: cepBranding },
   { sectionId: "pangeaDentalWorld", title: "Pangea Platform", carousel: pangeaBranding },
   { sectionId: "bookingSystem", title: "Booking System", carousel: bookingSystem },
@@ -66,6 +68,16 @@ const PfSection = memo(function PfSection({
   parallaxDistance = 200,
 }: PfSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
+
+  // Hero
+  if (sectionId === "hero") {
+    return (
+      <section className="px-10" id={sectionId} aria-labelledby={`${sectionId}-section`}>
+        <Hero />
+      </section>
+    );
+  }
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"], // smooth in/out scroll effect
@@ -75,8 +87,8 @@ const PfSection = memo(function PfSection({
   const titleIsLong = title.length > 18;
 
   return (
-    <section className="px-10" id={sectionId} aria-labelledby={`${sectionId}-title`}>
-      <div ref={ref}>
+    <section className="px-10" id={sectionId} aria-labelledby={`${sectionId}-section`}>
+      <div  className="w-full max-h-[90vh] bg-transparent overflow-hidden" ref={ref}>
         <PortfolioCarousel items={carousel} />
       </div>
 
@@ -101,8 +113,8 @@ const PfSection = memo(function PfSection({
 export default function Home() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
+    stiffness: 80,
+    damping: 25,
     restDelta: 0.001,
   });
 

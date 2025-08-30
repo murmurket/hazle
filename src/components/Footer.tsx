@@ -1,20 +1,22 @@
 import { Logo } from "./Logo";
+import Link from "next/link";
+import { siteUrl } from '@/lib/config';
+import { getEmail } from '@/utils/email';
 
 export function Footer({ title = "" }) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
   return (
     <footer>
-      <a href={siteUrl} target="_blank" rel="noreferrer">
+      <Link href={siteUrl} aria-label="Go to homepage">
         <Logo size="15" />
-      </a>
-      <a
-        href={siteUrl}
-        target="_blank"
-        rel="noreferrer"
-      >
+      </Link>
+      <Link 
+        href={`mailto:${getEmail()}`}
+        aria-label="Send an email to Hazle" 
+        target="_blank" 
+        rel="noopener noreferrer">
         <code>{title}</code>
-      </a>
+      </Link>
     </footer>
   );
 }

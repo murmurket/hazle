@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+/* ---------- Global Variables ---------- */
+:root {
   --black: #0d0d0d;
   --ash-black: #1e1e1f;
   --white: #eaeae8;
@@ -18,51 +19,66 @@ body {
 
   --background: var(--blue);
   --accent: var(--white);
+}
 
+/* ---------- Reset ---------- */
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
   margin: 0;
   padding: 0;
   background-color: var(--background);
   color: var(--accent);
-  box-sizing: border-box;
-}
-
-* {
-  font-family: sofia-pro, sans-serif;
+  font-family: var(--font-inter, sans-serif); /* use font variable from next/font/google */
   font-weight: 400;
   font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: inherit;
 }
 
-h1,
-h2,
-h3 {
-  font-family: sofia-pro, sans-serif;
+/* ---------- Typography ---------- */
+h1, h2, h3 {
+  font-family: inherit;
 }
 
+/* ---------- Code Elements ---------- */
+code {
+  font-family: input-mono, monospace;
+  font-weight: 400;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 1ex;
+}
+::-webkit-scrollbar-corner {
+  background: var(--background);
+}
+
+/* ---------- Footer ---------- */
 footer {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
   padding: 20px;
-  background-image: radial-gradient(
-    rgba(0, 0, 0, 0) 1px,
-    var(--background) 1px
-  );
-  background-size: 4px 4px;
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  -moz-backdrop-filter: blur(3px);
   font-size: 14px;
   line-height: 14px;
+  backdrop-filter: blur(3px);
+  background-image: radial-gradient(rgba(0, 0, 0, 0) 1px, var(--background) 1px);
+  background-size: 4px 4px;
 }
-
 footer::before {
-  display: block;
   content: "";
   position: absolute;
   top: -1px;
@@ -72,70 +88,39 @@ footer::before {
   background: var(--accent);
   opacity: 0.2;
 }
-
+footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
 footer svg {
   margin-right: 20px;
 }
 
-footer a {
-  text-decoration: none;
-  color: var(--accent);
-}
-
-code {
-  font-family: input-mono, monospace;
-  font-weight: 400;
-  font-style: normal;
-}
-
-::-webkit-scrollbar {
-  height: 5px;
-  width: 5px;
-  background: var(--background);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  -webkit-border-radius: 1ex;
-}
-
-::-webkit-scrollbar-corner {
-  background: var(--background);
-}
-
+/* ---------- Main Section Layout (#home_main) ---------- */
 html {
   scroll-snap-type: y mandatory;
 }
 
 #home_main {
   h1, h2 {
-    color: var(--accent);
-    bottom: calc(50% + 130px);
     position: absolute;
+    bottom: calc(50% + 130px);
+    color: var(--accent);
   }
-
   h1 {
     z-index: -1;
   }
 
   section {
-    background-color: var(--blue);
-    position: relative;
-    padding-top: 60px;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     scroll-snap-align: center;
+    position: relative;
+    padding-top: 60px;
+    background-color: var(--blue);
     perspective: 500px;
-
-    > div {
-      width: 100%;
-      position: relative;
-      max-height: 90vh;
-      background: transparent;
-      overflow: hidden;
-    }
 
     &::before {
       content: '';
@@ -150,7 +135,7 @@ html {
       z-index: -1;
       pointer-events: none;
       will-change: border-radius;
-      transition: border-radius 0.6s ease;
+      transition: border-radius 0.6s cubic-bezier(.5,0,.5,1);
     }
 
     &.shrink::before {
@@ -166,7 +151,6 @@ html {
       }
     }
 
-    /* desk top */
     @media (min-width: 768px) {
       &::before {
         top: -100px;
@@ -176,6 +160,7 @@ html {
   }
 }
 
+/* ---------- Image Reset ---------- */
 img {
   position: absolute;
   top: 0;
@@ -186,44 +171,37 @@ img {
   height: 100%;
 }
 
+/* ---------- Scroll Progress Bar ---------- */
 .progress {
   position: fixed;
   left: 0;
   right: 0;
+  bottom: 100px;
   height: 5px;
   background: var(--accent);
-  bottom: 100px;
   z-index: -1;
 }
 
-
+/* ---------- Slick Carousel Custom ---------- */
 .custom-carousel .slick-slide {
-  transform: scale(0.8); /* 기본 크기 축소 */
-  transition: transform 0.5s ease, opacity 0.5s ease; /* 전환 효과 추가 */
-  opacity: 0.5; /* 배경 슬라이드 투명도 */
+  transform: scale(0.8);
+  opacity: 0.5;
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
-
 .custom-carousel .slick-active {
-  transform: perspective(1000px) rotateY(15deg); /* 3D 회전 효과 */
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* 부드러운 전환 */
-}
-
-.custom-carousel .slick-active:nth-of-type(odd):not(.slick-center) {
-  transform: perspective(1000px) rotateY(-15deg); /* 중심 왼쪽 슬라이드 */
+  transform: perspective(1000px) rotateY(15deg);
   transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
-
+.custom-carousel .slick-active:nth-of-type(odd):not(.slick-center) {
+  transform: perspective(1000px) rotateY(-15deg);
+}
 .custom-carousel .slick-center {
-  transform: scale(1) rotateY(0deg); /* 중심 슬라이드 강조 */
+  transform: scale(1) rotateY(0deg);
   opacity: 1;
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* 부드러운 전환 */
 }
 
-/* globals.css - add near the bottom */
-
-/* ---------- Prose polish (tables, task-lists, code) ---------- */
+/* ---------- Prose Markdown ---------- */
 .prose {
-  /* tables */
   --tbl-border: rgba(255,255,255,0.12);
   --tw-prose-invert-quote-borders: #617da9;
 }
@@ -247,8 +225,6 @@ img {
 .prose :where(tr:last-child td) {
   border-bottom: 0;
 }
-
-/* task-list (HTML 기반) */
 .prose :where(ul.task-list) {
   list-style: none;
   padding-left: 0;
@@ -266,8 +242,6 @@ img {
   height: 1rem;
   accent-color: var(--dusk);
 }
-
-/* code blocks */
 .prose :where(pre) {
   background: rgba(0,0,0,0.4);
   border: 1px solid rgba(255,255,255,0.12);
