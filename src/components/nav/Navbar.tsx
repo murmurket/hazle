@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Logo } from "./Logo";
+import { Logo } from "../Logo";
 import { siteUrl } from '@/lib/config';
 
 export default function Navbar() {

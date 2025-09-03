@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 
 interface TextPressureProps {
 	text?: string;
@@ -44,7 +44,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
 	const [scaleY, setScaleY] = useState(1);
 	const [lineHeight, setLineHeight] = useState(1);
 
-	const chars = text.split("");
+	const chars = useMemo(() => text.split(""), [text]);
 
 	const dist = (a: { x: number; y: number }, b: { x: number; y: number }) => {
 		const dx = b.x - a.x;
@@ -81,36 +81,36 @@ const TextPressure: React.FC<TextPressureProps> = ({
 		};
 	}, []);
 
-	const setSize = () => {
-		if (!containerRef.current || !titleRef.current) return;
+	const setSize = useCallback(() => {
+	if (!containerRef.current || !titleRef.current) return;
 
-		const { width: containerW, height: containerH } =
-			containerRef.current.getBoundingClientRect();
+	const { width: containerW, height: containerH } =
+		containerRef.current.getBoundingClientRect();
 
-		let newFontSize = containerW / (chars.length / 2);
-		newFontSize = Math.max(newFontSize, minFontSize);
+	let newFontSize = containerW / (chars.length / 2);
+	newFontSize = Math.max(newFontSize, minFontSize);
 
-		setFontSize(newFontSize);
-		setScaleY(1);
-		setLineHeight(1);
+	setFontSize(newFontSize);
+	setScaleY(1);
+	setLineHeight(1);
 
-		requestAnimationFrame(() => {
-			if (!titleRef.current) return;
-			const textRect = titleRef.current.getBoundingClientRect();
+	requestAnimationFrame(() => {
+		if (!titleRef.current) return;
+		const textRect = titleRef.current.getBoundingClientRect();
 
-			if (scale && textRect.height > 0) {
-				const yRatio = containerH / textRect.height;
-				setScaleY(yRatio);
-				setLineHeight(yRatio);
-			}
-		});
-	};
+		if (scale && textRect.height > 0) {
+		const yRatio = containerH / textRect.height;
+		setScaleY(yRatio);
+		setLineHeight(yRatio);
+		}
+	});
+	}, [chars, minFontSize, scale]);
 
 	useEffect(() => {
-		setSize();
-		window.addEventListener("resize", setSize);
-		return () => window.removeEventListener("resize", setSize);
-	}, [scale, text]);
+	setSize();
+	window.addEventListener("resize", setSize);
+	return () => window.removeEventListener("resize", setSize);
+	}, [setSize]);
 
 	useEffect(() => {
 		let rafId: number;
