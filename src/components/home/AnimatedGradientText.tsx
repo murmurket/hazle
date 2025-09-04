@@ -4,10 +4,6 @@ import React, { useRef } from "react";
 import TextPressure from '@/jsrepo/TextPressure/TextPressure';
 import GradientBlinds from '@/jsrepo/GradientBlinds/GradientBlinds';
 
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import Magnet from '@/jsrepo/Magnet/Magnet'
-
 interface AnimatedGradientTextProps {
   text?: string;
   gradientProps?: Partial<Parameters<typeof GradientBlinds>[0]>;
