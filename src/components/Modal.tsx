@@ -31,10 +31,10 @@ const Modal = ({ image, isOpen, onClose, links }: ModalProps) => {
       onClick={onClose}
     >
       <div
-        className="relative w-[90vw] max-w-3xl h-[80vh] flex items-center justify-center" // 부모 컨테이너 크기 제한 및 상대 위치 설정
+        className="relative w-[90vw] max-w-3xl h-[80vh] flex flex-col items-center justify-center gap-3 pb-10"
         onClick={(e) => e.stopPropagation()} // Prevent internal click event propagation
       >
-        <div className="relative w-full h-full">
+        <div className="relative w-full h-full top-0">
           <Image
             src={image}
             alt={`Selected ${image}`}
@@ -42,7 +42,7 @@ const Modal = ({ image, isOpen, onClose, links }: ModalProps) => {
             className="object-contain rounded-lg" // retain ratio
           />
         </div>
-        <div className="absolute bottom-16 flex flex-row">
+        <div className="flex flex-row">
           {links && links.length > 0 && (
             <div className="bg-slate-100 rounded-full px-6 py-2 mr-3 shadow-md hover:bg-gray-500 transition leading-none">
               {links.map(({ url, text }, index) => (
