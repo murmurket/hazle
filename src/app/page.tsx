@@ -19,6 +19,7 @@ import cmsSiteItems from "@/data/cmsSiteItems";
 import bookingSystem from "@/data/bookingSystem";
 import customDevelopment from "@/data/customDevelopment";
 
+import Hero from '@/components/home/Hero';
 import HomeSectionObserver from '@/components/home/HomeSectionObserver';
 
 // ============================================================
@@ -65,32 +66,35 @@ const PfSection = memo(function PfSection({
   carousel,
   parallaxDistance = 200,
 }: PfSectionProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"], // smooth in/out scroll effect
-  });
-  const y = useParallax(scrollYProgress, parallaxDistance);
+    const ref = useRef<HTMLDivElement>(null);
 
-  const titleIsLong = title.length > 18;
+    const { scrollYProgress } = useScroll({
+      target: ref,
+      offset: ["start end", "end start"],
+    });
 
+    const y = useParallax(scrollYProgress, parallaxDistance);
+    
   return (
-    <section className="px-10" id={sectionId} aria-labelledby={`${sectionId}-title`}>
-      <div ref={ref}>
-        <PortfolioCarousel items={carousel} />
-      </div>
+    <section 
+      ref={ref}
+      className="relative px-10 py-32 min-h-screen" 
+      id={sectionId} 
+      aria-labelledby={`${sectionId}-title`}
+    >
+      <PortfolioCarousel items={carousel}/>
 
-      <motion.h2
-        id={`${sectionId}-title`}
-        style={{ y }}
-        className={clsx(
-          baseStyles.h2,
-          "text-center",
-          titleIsLong && "text-3xl"
-        )}
-      >
-        {title}
-      </motion.h2>
+      <motion.div className="absolute inset-x-0 top-1/4 text-foreground z-1" style={{ y }}>
+        <h2
+          id={`${sectionId}-title`}
+          className={clsx(
+            baseStyles.h2,
+            "text-center text-3xl md:text-4xl"
+          )}
+        >
+          {title}
+        </h2>
+      </motion.div>
     </section>
   );
 });
@@ -101,24 +105,27 @@ const PfSection = memo(function PfSection({
 export default function Home() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
+    stiffness: 80,
+    damping: 25,
     restDelta: 0.001,
   });
 
   return (
-    <div>
+    <main id="home_main">
       {/* Unique page-level heading (screen-reader only) */}
       <HomeSectionObserver />
-      <main className="pt-16" id="home_main">
-        <h1 className={clsx(baseStyles.h1, "sr-only")}>Portfolio</h1>
+      <h1 className="sr-only">Commercial Portfolio</h1>
+      <div className="relative pt-16">
+        <section className="px-10" id="hero" aria-labelledby="hero-title">
+          <Hero />
+        </section>
         {PF_ITEMS.map((item) => (
           <PfSection key={item.sectionId} {...item} />
         ))}
 
         {/* Progress bar */}
-        <motion.div className="progress" style={{ scaleX }} />
-      </main>
-    </div>
+        <motion.div className="fixed left-0 right-0 bottom-[100px] h-1 bg-foreground z-1" style={{ scaleX }} />
+      </div>
+    </main>
   );
 }

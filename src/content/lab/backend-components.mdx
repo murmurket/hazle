@@ -1,0 +1,148 @@
+export const metadata = {
+  title: "The 3 Core Components of Backend Development",
+  date: "2025-09-02",
+  excerpt: "A solid foundation in Web Server, WAS, and Database will make advanced backend concepts much easier to grasp.",
+  tags: ["backend", "architecture", "web server", "WAS", "database"],
+  draft: false,
+};
+
+This post demonstrates the **3 essential components of backend development**  
+presented in Lab's MDX rendering style, including quotes, lists, checklists, tables, and code blocks.
+
+---
+
+## 1. Web Server – Serving Static Files
+
+The web began as a way to share static documents across the globe.
+
+- A **web server** (like Nginx or Apache) simply sends `.html`, `.css`, or `.js` files to browsers.
+- Everyone sees the same page. There’s no user-specific content.
+- No logic, no thinking—just serving.
+
+> Think of it as a super-optimized "file fetcher."
+
+---
+
+## 2. WAS (Web Application Server) – Handling Logic & Dynamic Content
+
+As demand grew for dynamic features—guestbooks, logins, personalized views—**Web Servers fell short**.
+
+That’s where **WAS** comes in:
+
+- It receives a request, **executes code**, and returns dynamic results.
+- It's the **runtime** that runs backend logic.
+- WAS interprets requests, connects to databases, and returns generated content.
+
+### Common Misconception
+
+People often confuse **WAS** with **Backend Frameworks** (e.g., Django, Spring, Express). Here's the difference:
+
+<table>
+  <thead>
+    <tr>
+      <th>WAS</th>
+      <th>Backend Framework</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Executes your code</td>
+      <td>Provides structure &amp; tools for code</td>
+    </tr>
+    <tr>
+      <td>Like a car engine</td>
+      <td>Like the blueprint to build the car</td>
+    </tr>
+    <tr>
+      <td>E.g., Tomcat, Node.js</td>
+      <td>E.g., Django, Express, Spring</td>
+    </tr>
+  </tbody>
+</table>
+
+> Even Spring Boot or Express includes an embedded WAS like Tomcat or Node.js.
+
+---
+
+## 3. Database – Storing & Protecting Data
+
+WAS can calculate, but it **cannot remember**.
+
+- Once the server restarts, all data is gone… unless you use a **Database**.
+- Databases are designed for:
+  - **Concurrency**: handling multiple users at once
+  - **Integrity**: e.g., transferring money between accounts safely
+  - **Search Speed**: indexes let you find what you need instantly
+
+**Why not just use a text file?**
+
+Because plain files:
+- Can't prevent race conditions
+- Can’t guarantee "all-or-nothing" operations
+- Are slow to search
+
+> A **Database** is a battle-tested solution to real-world data problems.
+
+---
+
+## How They Work Together (Example)
+
+### 1. First Visit (Static Page Load)
+- Browser requests a site → **Web Server** sends HTML, JS
+- Page appears
+
+### 2. Login (Dynamic Processing)
+- User submits login → Web Server proxies to **WAS**
+- WAS checks credentials in **Database**
+- If valid, returns token (JWT) → user is logged in
+
+### 3. Viewing Posts
+- Browser requests `/api/post/123`
+- WAS checks token, fetches from DB, returns JSON
+- Frontend renders post data
+
+---
+
+## Why This Matters
+
+The history of backend architecture is the story of solving real limitations:
+
+<table>
+  <thead>
+    <tr>
+      <th>Problem</th>
+      <th>Solution</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>How to share static documents</td>
+      <td>Web Server</td>
+    </tr>
+    <tr>
+      <td>How to respond to dynamic requests</td>
+      <td>WAS</td>
+    </tr>
+    <tr>
+      <td>How to store data safely & fast</td>
+      <td>Database</td>
+    </tr>
+  </tbody>
+</table>
+
+Together, they embody **Separation of Concerns**—the core principle behind scalable systems.
+
+---
+
+## Final Thoughts
+
+By deeply understanding these 3 components:
+
+- You'll finally grasp what "backend" really means.
+- You’ll have a mental model that makes tools like Kubernetes or Redis make actual sense.
+- And you'll ace backend interviews with confidence—not memorization.
+
+---
+
+> Backend isn't about learning every tool.  
+> It's about understanding **why those tools exist** in the first place.

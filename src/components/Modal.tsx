@@ -31,19 +31,20 @@ const Modal = ({ image, isOpen, onClose, links }: ModalProps) => {
       onClick={onClose}
     >
       <div
-        className="relative w-[90vw] max-w-3xl h-[80vh] flex items-center justify-center" // 부모 컨테이너 크기 제한 및 상대 위치 설정
-        onClick={(e) => e.stopPropagation()} // 내부 클릭 이벤트 전파 방지
+        className="relative w-[90vw] max-w-3xl h-[80vh] flex flex-col items-center justify-center gap-3 pb-10"
+        onClick={(e) => e.stopPropagation()} // Prevent internal click event propagation
       >
-        <div>
+        <div className="relative w-full h-full top-0">
           <Image
             src={image}
             alt={`Selected ${image}`}
-            layout="fill" // 부모 컨테이너에 맞춤
-            className="object-contain rounded-lg" // 비율 유지 및 잘리지 않게 표시
+            fill
+            className="object-contain rounded-lg" // retain ratio
           />
         </div>
+        <div className="flex flex-row">
           {links && links.length > 0 && (
-            <div className="absolute bottom-16 inset-x-0 bg-slate-100 rounded-full p-2 shadow-md hover:bg-gray-500 transition leading-none">
+            <div className="bg-slate-100 rounded-full px-6 py-2 mr-3 shadow-md hover:bg-gray-500 transition leading-none">
               {links.map(({ url, text }, index) => (
                 <a
                   key={index}
@@ -59,10 +60,11 @@ const Modal = ({ image, isOpen, onClose, links }: ModalProps) => {
           )}
           <button
             onClick={onClose}
-            className="absolute bottom-2 inset-x-0 bg-slate-600 text-black rounded-full p-2 shadow-md hover:bg-gray-300 transition leading-none"
+            className="bg-slate-600 text-black rounded-full px-6 py-2 shadow-md hover:bg-gray-300 transition leading-none"
           >
             ✕
           </button>
+        </div>
       </div>
     </div>
   );
