@@ -1,8 +1,8 @@
 'use client';
 
+import AnimatedGradientText from '@/components/home/AnimatedGradientText';
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import AnimatedGradientText from '@/components/home/AnimatedGradientText';
 import Magnet from '@/jsrepo/Magnet/Magnet'
 
 export default function Hero() {
@@ -40,19 +40,18 @@ export default function Hero() {
       
       <h2 id="hero-title" className="sr-only">Welcome to Hazle</h2>
 
-      <div className='w-full absolute top-1/2 left-0 flex justify-center items-center gap-6 mt-14'>
+      <div className='w-full absolute top-2/4 left-0 flex justify-center items-center gap-6 mt-14 z-10 xl:top-3/4'>
         <Magnet padding={5} disabled={false} magnetStrength={5}>
-          <Link href="#cepDental">
+        <Link href="#cepDental">
             <Button type="button" aria-label="Open Commercial page" variant="outline" size="lg">Commercial</Button>
-          </Link>
+        </Link>
         </Magnet>
         <Magnet padding={5} disabled={false} magnetStrength={5}>
-          <Link href="/lab">
+        <Link href="/lab">
             <Button type="button" aria-label="Open Lab page" variant="default" size="lg">Lab</Button>
-          </Link>
+        </Link>
         </Magnet>
       </div>
-
     </div>
   );
 }

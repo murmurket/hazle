@@ -136,7 +136,7 @@ footer svg {
 
     @media (min-width: 768px) {
       &::before {
-        top: -100px;
+        top: -50px;
         height: 100px;
       }
     }
