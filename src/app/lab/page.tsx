@@ -12,7 +12,7 @@ export default function LabPage() {
   );
 
   return (
-    <main className="max-w-5xl mx-auto px-6 pt-20 pb-20">
+    <main className="max-w-5xl mx-auto px-6 pt-20 pb-20" id="lab_main">
       <Typography as="h1" className="mb-2">
         Lab
       </Typography>

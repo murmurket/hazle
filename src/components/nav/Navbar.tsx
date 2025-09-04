@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Logo } from "./Logo";
+import { Logo } from "../Logo";
+import { siteUrl } from '@/lib/config';
 
 export default function Navbar() {
   return (
@@ -13,13 +14,16 @@ export default function Navbar() {
       transition={{ duration: 0.5 }}
       aria-label="Main site navigation"
     >
-      {/* 왼쪽: 로고 */}
-      <Link href="/" aria-label="Go to homepage">
+      {/* left: logo */}
+      <Link href={siteUrl} aria-label="Go to homepage">
         <Logo size="40" />
       </Link>
 
-      {/* 오른쪽: 메뉴 */}
+      {/* right: menu */}
       <div className="flex gap-8 text-lg text-white">
+        <Link href={siteUrl} className="hover:opacity-70 transition-opacity">
+          Commercial
+        </Link>
         <Link href="/lab" className="hover:opacity-70 transition-opacity">
           Lab
         </Link>

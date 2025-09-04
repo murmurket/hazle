@@ -76,7 +76,7 @@ const PortfolioCarousel = ({ items, className }: CarouselProps) => {
           return (
             <div key={key} className="p-4" aria-roledescription="slide" aria-label={`${idx + 1} of ${items.length}`}>
               <div
-                className="relative flex h-64 cursor-pointer items-center justify-center"
+                className="flex h-64 cursor-pointer items-center justify-center"
                 onClick={() => openModal(item.src, item.links)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
@@ -88,27 +88,30 @@ const PortfolioCarousel = ({ items, className }: CarouselProps) => {
                 tabIndex={0}
                 aria-label={`Open details for ${item.title}`}
               >
-                <Image
-                  src={item.src}
-                  alt={item.alt ?? item.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="rounded-lg object-cover object-top"
-                  // Prioritize first couple of images for faster LCP
-                  priority={idx < 2}
-                  loading={idx < 2 ? "eager" : "lazy"}
-                />
+                <div className="relative w-full h-full">
+                  <Image
+                    src={item.src}
+                    alt={item.alt ?? item.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="rounded-lg object-cover object-top"
+                    // Prioritize first couple of images for faster LCP
+                    priority={idx < 2}
+                    loading={idx < 2 ? "eager" : "lazy"}
+                  />
 
-                {/* Gradient overlay with centered title */}
-                <div className="pointer-events-none absolute inset-0 flex items-end justify-center rounded-lg bg-gradient-to-t from-black/80 via-black/20 to-transparent p-3">
-                  <h3
-                    className={clsx(
-                      "top-3/4 text-center font-medium text-white",
-                      hasLongTitle ? "text-sm" : "text-md"
-                    )}
-                  >
-                    {item.title}
-                  </h3>
+                  {/* Gradient overlay with centered title */}
+                  <div className="pointer-events-none absolute inset-0 flex items-end justify-center rounded-lg bg-gradient-to-t from-black/80 via-black/20 to-transparent p-3">
+                    <h3
+                      className={clsx(
+                        "top-3/4 text-center font-medium text-white",
+                        hasLongTitle ? "text-sm" : "text-md"
+                      )}
+                    >
+                      {item.title}
+                    </h3>
+                  </div>
+                
                 </div>
               </div>
             </div>
